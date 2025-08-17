@@ -52,3 +52,11 @@ https://github.com/android/nowinandroid/tree/main/core/database
 
 데이터 베이스 모듈에서는 서버에서 받은 데이터 타입에 관해서는 알 필요가 없음.
 
+
+
+
+now in android 따라하기
+
+
+# 패키지명 
+앱 패키지.core.database
