@@ -3,7 +3,6 @@ package com.sarang.torang.data.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity
 data class ReviewImageEntity(
     @PrimaryKey val pictureId: Int,
@@ -33,24 +32,4 @@ data class ReviewImageEntity(
             )
         }
     }
-
-    //TODO::다른 곳에서 변환하기
-    /*fun FeedApiModel.toPictureEntityList(): List<ReviewImageEntity> {
-        return pictures.map { it.toPictureEntity() }.toList()
-    }
-
-    fun RemotePicture.toPictureEntity(): ReviewImageEntity {
-        return ReviewImageEntity(
-            pictureId = picture_id,
-            restaurantId = restaurant_id,
-            userId = user_id,
-            reviewId = review_id,
-            pictureUrl = picture_url,
-            createDate = create_date ?: "",
-            menuId = menu_id,
-            menu = menu.toInt(),
-            width = width,
-            height = height
-        )
-    }*/
 }

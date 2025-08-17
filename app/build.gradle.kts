@@ -100,4 +100,5 @@ dependencies {
     implementation(libs.lifecycle.runtime.compose)
 
     implementation(libs.theme)
+    implementation(project(":library"))
 }

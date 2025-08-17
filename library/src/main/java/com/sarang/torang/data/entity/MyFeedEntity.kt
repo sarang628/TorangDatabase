@@ -18,20 +18,3 @@ data class MyFeedEntity(
     val commentAmount: Int,/* 10 */
     val createDate: String/* 11 */
 )
-
-/* 다른 곳에서 변환 하기
-fun FeedApiModel.toMyFeedEntity(): MyFeedEntity {
-    return MyFeedEntity(
-        reviewId = reviewId,
-        userId = user.userId,
-        contents = contents,
-        rating = rating,
-        userName = user.userName,
-        likeAmount = like_amount,
-        commentAmount = comment_amount,
-        restaurantName = restaurant.restaurantName,
-        restaurantId = restaurant.restaurantId,
-        createDate = this.create_date,
-        profilePicUrl = this.user.profilePicUrl
-    )
-}*/
