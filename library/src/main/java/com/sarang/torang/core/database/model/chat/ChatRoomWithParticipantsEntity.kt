@@ -1,4 +1,4 @@
-package com.sarang.torang.core.database.entity
+package com.sarang.torang.core.database.model.chat
 
 import androidx.room.Embedded
 import androidx.room.Entity

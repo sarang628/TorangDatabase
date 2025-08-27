@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sarang.torang.core.database.entity.LikeEntity
+import com.sarang.torang.core.database.model.like.LikeEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sarang.torang.core.database.entity.MenuEntity
+import com.sarang.torang.core.database.model.restaurant.MenuEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

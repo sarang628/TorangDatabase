@@ -1,4 +1,4 @@
-package com.sarang.torang.core.database.entity
+package com.sarang.torang.core.database.model.restaurant
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

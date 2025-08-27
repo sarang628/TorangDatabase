@@ -5,13 +5,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.sarang.torang.core.database.entity.FavoriteEntity
-import com.sarang.torang.core.database.entity.LikeEntity
-import com.sarang.torang.core.database.entity.MyFeedEntity
-import com.sarang.torang.core.database.entity.RestaurantEntity
-import com.sarang.torang.core.database.entity.ReviewAndImageEntity
-import com.sarang.torang.core.database.entity.ReviewImageEntity
-import com.sarang.torang.core.database.entity.UserEntity
+import com.sarang.torang.core.database.model.favorite.FavoriteEntity
+import com.sarang.torang.core.database.model.feed.MyFeedEntity
+import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
+import com.sarang.torang.core.database.model.feed.ReviewImageEntity
+import com.sarang.torang.core.database.model.like.LikeEntity
+import com.sarang.torang.core.database.model.restaurant.RestaurantEntity
+import com.sarang.torang.core.database.model.user.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

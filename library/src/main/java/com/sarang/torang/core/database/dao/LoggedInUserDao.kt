@@ -16,7 +16,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sarang.torang.core.database.entity.LoggedInUserEntity
+import com.sarang.torang.core.database.model.user.LoggedInUserEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

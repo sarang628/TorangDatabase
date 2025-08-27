@@ -5,12 +5,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.sarang.torang.core.database.entity.ChatEntity
-import com.sarang.torang.core.database.entity.ChatEntityWithUser
-import com.sarang.torang.core.database.entity.ChatParticipantsEntity
-import com.sarang.torang.core.database.entity.ChatRoomEntity
-import com.sarang.torang.core.database.entity.ChatRoomWithParticipantsEntity
-import com.sarang.torang.core.database.entity.ParticipantsWithUserEntity
+import com.sarang.torang.core.database.model.chat.ChatEntity
+import com.sarang.torang.core.database.model.chat.ChatEntityWithUser
+import com.sarang.torang.core.database.model.chat.ChatParticipantsEntity
+import com.sarang.torang.core.database.model.chat.ChatRoomEntity
+import com.sarang.torang.core.database.model.chat.ChatRoomWithParticipantsEntity
+import com.sarang.torang.core.database.model.chat.ParticipantsWithUserEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 

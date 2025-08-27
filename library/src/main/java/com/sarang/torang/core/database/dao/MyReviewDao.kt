@@ -2,8 +2,8 @@ package com.sarang.torang.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.sarang.torang.core.database.entity.FeedEntity
-import com.sarang.torang.core.database.entity.ReviewImageEntity
+import com.sarang.torang.core.database.model.feed.FeedEntity
+import com.sarang.torang.core.database.model.feed.ReviewImageEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

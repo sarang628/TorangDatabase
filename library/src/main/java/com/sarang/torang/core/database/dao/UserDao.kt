@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.sarang.torang.core.database.entity.UserEntity
+import com.sarang.torang.core.database.model.user.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

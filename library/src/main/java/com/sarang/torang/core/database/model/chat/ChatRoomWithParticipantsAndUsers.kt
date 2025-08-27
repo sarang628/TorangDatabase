@@ -1,4 +1,4 @@
-package com.sarang.torang.core.database.entity
+package com.sarang.torang.core.database.model.chat
 
 data class ChatRoomWithParticipantsAndUsers(
     val chatRoomEntity: ChatRoomEntity,

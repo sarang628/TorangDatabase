@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.sarang.torang.core.database.entity.ReviewImageEntity
+import com.sarang.torang.core.database.model.feed.ReviewImageEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,10 +1,10 @@
-package com.sarang.torang.core.database.entity
+package com.sarang.torang.core.database.model.feed
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class MyFeedEntity(
+data class FeedEntity(
     @PrimaryKey
     val reviewId: Int = -1,
     val userId: Int,

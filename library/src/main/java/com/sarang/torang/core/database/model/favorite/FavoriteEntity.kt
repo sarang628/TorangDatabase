@@ -1,4 +1,4 @@
-package com.sarang.torang.core.database.entity
+package com.sarang.torang.core.database.model.favorite
 
 import androidx.room.Entity
 import androidx.room.Index

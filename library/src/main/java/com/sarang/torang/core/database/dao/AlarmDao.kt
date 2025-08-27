@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sarang.torang.core.database.entity.AlarmAndUserEntity
-import com.sarang.torang.core.database.entity.AlarmEntity
+import com.sarang.torang.core.database.model.alarm.AlarmAndUserEntity
+import com.sarang.torang.core.database.model.alarm.AlarmEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -17,7 +17,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.google.gson.GsonBuilder
-import com.sarang.torang.core.database.entity.FeedEntity
+import com.sarang.torang.core.database.model.feed.FeedEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 

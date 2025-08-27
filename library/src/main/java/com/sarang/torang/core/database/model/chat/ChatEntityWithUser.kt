@@ -1,8 +1,9 @@
-package com.sarang.torang.core.database.entity
+package com.sarang.torang.core.database.model.chat
 
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Relation
+import com.sarang.torang.core.database.model.user.UserEntity
 
 @Entity
 data class ChatEntityWithUser(

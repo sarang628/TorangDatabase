@@ -1,8 +1,8 @@
 package com.sarang.torang.core.database.dao
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Text
 import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,8 +14,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sarang.torang.core.database.entity.FavoriteEntity
-import com.sarang.torang.core.database.entity.ReviewAndImageEntity
+import com.sarang.torang.core.database.model.favorite.FavoriteEntity
+import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
