@@ -3,7 +3,7 @@ package com.sarang.torang.core.database.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.sarang.torang.core.database.model.feed.FeedEntity
-import com.sarang.torang.core.database.model.feed.ReviewImageEntity
+import com.sarang.torang.core.database.model.image.ReviewImageEntity;
 import kotlinx.coroutines.flow.Flow
 
 @Dao

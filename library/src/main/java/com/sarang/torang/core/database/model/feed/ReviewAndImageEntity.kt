@@ -3,6 +3,7 @@ package com.sarang.torang.core.database.model.feed
 import androidx.room.Embedded
 import androidx.room.Relation
 import com.sarang.torang.core.database.model.favorite.FavoriteEntity
+import com.sarang.torang.core.database.model.image.ReviewImageEntity
 import com.sarang.torang.core.database.model.like.LikeEntity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
