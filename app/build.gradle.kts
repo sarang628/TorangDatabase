@@ -89,6 +89,20 @@ dependencies {
     kaptTest(libs.hilt.compiler)
     testAnnotationProcessor(libs.hilt.compiler)
 
+    // For instrumented tests.
+    androidTestImplementation(libs.hilt.testing)
+    kaptAndroidTest(libs.hilt.compiler)
+    androidTestAnnotationProcessor(libs.hilt.compiler)
+    // Hilt End
+    /** TEST End */
+
+
+    // Hilt Start
+    // For Robolectric tests.
+    testImplementation(libs.hilt.testing)
+    kaptTest(libs.hilt.compiler)
+    testAnnotationProcessor(libs.hilt.compiler)
+
     // Compose
     androidTestImplementation(platform(libs.x.compose.bom))
     implementation(libs.x.ui) //없으면 @Composable import 안됨
