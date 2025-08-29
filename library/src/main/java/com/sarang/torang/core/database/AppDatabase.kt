@@ -20,6 +20,7 @@ import com.sarang.torang.core.database.dao.MyFeedDao
 import com.sarang.torang.core.database.dao.MyReviewDao
 import com.sarang.torang.core.database.dao.PictureDao
 import com.sarang.torang.core.database.dao.RestaurantDao
+import com.sarang.torang.core.database.dao.RestaurantImageDao
 import com.sarang.torang.core.database.dao.ReviewDao
 import com.sarang.torang.core.database.dao.SearchDao
 import com.sarang.torang.core.database.dao.SearchedRestaurantDao
@@ -34,7 +35,8 @@ import com.sarang.torang.core.database.model.comment.CommentEntity
 import com.sarang.torang.core.database.model.favorite.FavoriteEntity
 import com.sarang.torang.core.database.model.feed.FeedEntity
 import com.sarang.torang.core.database.model.feed.MyFeedEntity
-import com.sarang.torang.core.database.model.feed.ReviewImageEntity
+import com.sarang.torang.core.database.model.image.RestaurantImageEntity
+import com.sarang.torang.core.database.model.image.ReviewImageEntity;
 import com.sarang.torang.core.database.model.like.LikeEntity
 import com.sarang.torang.core.database.model.restaurant.MenuEntity
 import com.sarang.torang.core.database.model.restaurant.RestaurantEntity
@@ -66,7 +68,8 @@ import com.sarang.torang.workers.TorangDatabaseWorker
         ChatRoomEntity::class,
         ChatParticipantsEntity::class,
         ChatImageEntity::class,
-        SearchedRestaurantEntity::class
+        SearchedRestaurantEntity::class,
+        RestaurantImageEntity::class
     ], version = 1, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -86,6 +89,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun myFeedDao(): MyFeedDao
     abstract fun chatDao(): ChatDao
     abstract fun searchedRestaurantDao(): SearchedRestaurantDao
+    abstract fun restaurantImageDao() : RestaurantImageDao
 
     companion object {
         // For Singleton instantiation
