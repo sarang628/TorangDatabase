@@ -1,4 +1,5 @@
-package com.sarang.torang.core.database.model.feed
+package com.sarang.torang.core.database.model.image
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
