@@ -9,7 +9,7 @@ import com.sarang.torang.core.database.model.favorite.FavoriteEntity
 
 import com.sarang.torang.core.database.model.feed.FeedEntity
 import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
-import com.sarang.torang.core.database.model.feed.ReviewImageEntity
+import com.sarang.torang.core.database.model.image.ReviewImageEntity;
 import com.sarang.torang.core.database.model.like.LikeEntity
 import com.sarang.torang.core.database.model.restaurant.RestaurantEntity
 import com.sarang.torang.core.database.model.user.UserEntity
