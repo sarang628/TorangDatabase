@@ -166,7 +166,7 @@ interface FeedDao {
     suspend fun subTractLikeCount(reviewId: Int)
 
     @Query("""select * 
-              from ReviewImageEntity 
+              from FeedEntity 
               Where reviewId = (select reviewId from ReviewImageEntity where pictureId = :pictureId)""")
-    fun getFeedByPictureId(pictureId: Int): Flow<ReviewImageEntity>
+    fun getFeedByPictureId(pictureId: Int): Flow<ReviewAndImageEntity>
 }
