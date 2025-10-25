@@ -164,4 +164,9 @@ interface FeedDao {
 
     @Query("update FeedEntity set likeAmount = likeAmount - 1 where reviewId = (:reviewId)")
     suspend fun subTractLikeCount(reviewId: Int)
+
+    @Query("""select * 
+              from ReviewImageEntity 
+              Where reviewId = (select reviewId from ReviewImageEntity where pictureId = :pictureId)""")
+    suspend fun getFeedByPictureId(pictureId: Int): List<ReviewImageEntity>
 }

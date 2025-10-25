@@ -45,7 +45,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+        kotlinCompilerExtensionVersion = "1.5.0"
     }
 
     compileOptions {
@@ -112,6 +112,7 @@ dependencies {
     implementation(libs.material3) //JetNews Main 따라하기
     implementation(libs.material3.windows.size)
     implementation(libs.lifecycle.runtime.compose)
+    implementation(libs.torangnetwork)
 
     implementation(libs.theme)
     implementation(project(":library"))
