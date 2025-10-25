@@ -72,7 +72,7 @@ class FeedDaoTest {
 
     @Test
     fun getFeedByPictureIdTest() = runTest {
-        val result = feedDao.getFeedByPictureId(1039)
+        val result = feedDao.getFeedByPictureId(1039).first()
         Log.d(tag, result.toString());
     }
 }
