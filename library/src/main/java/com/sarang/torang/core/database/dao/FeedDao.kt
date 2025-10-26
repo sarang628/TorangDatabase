@@ -168,5 +168,5 @@ interface FeedDao {
     @Query("""select * 
               from FeedEntity 
               Where reviewId = (select reviewId from ReviewImageEntity where pictureId = :pictureId)""")
-    fun getFeedByPictureId(pictureId: Int): Flow<ReviewAndImageEntity>
+    fun getFeedByPictureId(pictureId: Int): Flow<ReviewAndImageEntity?>
 }
