@@ -8,7 +8,7 @@ import com.sarang.torang.core.database.model.chat.ChatMessageEntity
 import com.sarang.torang.core.database.model.chat.ChatRoomEntity
 
 @Dao
-interface ChatDao {
+interface ChatMessageDao {
 
     @Query("Delete from ChatMessageEntity")
     suspend fun deleteAllChat()

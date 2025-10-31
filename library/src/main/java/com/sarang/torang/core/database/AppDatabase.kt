@@ -9,7 +9,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.sarang.torang.core.database.dao.AlarmDao
-import com.sarang.torang.core.database.dao.chat.ChatDao
+import com.sarang.torang.core.database.dao.chat.ChatMessageDao
 import com.sarang.torang.core.database.dao.CommentDao
 import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.FeedDao
@@ -87,7 +87,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun likeDao(): LikeDao
     abstract fun favoriteDao(): FavoriteDao
     abstract fun myFeedDao(): MyFeedDao
-    abstract fun chatDao(): ChatDao
+    abstract fun chatDao(): ChatMessageDao
     abstract fun searchedRestaurantDao(): SearchedRestaurantDao
     abstract fun restaurantImageDao() : RestaurantImageDao
 
