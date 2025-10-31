@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sarang.torang.core.database.model.chat.ChatMessageEntity
-import com.sarang.torang.core.database.model.chat.ChatRoomEntity
 
 @Dao
 interface ChatMessageDao {
