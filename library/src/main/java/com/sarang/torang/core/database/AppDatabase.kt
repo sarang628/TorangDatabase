@@ -9,7 +9,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.sarang.torang.core.database.dao.AlarmDao
-import com.sarang.torang.core.database.dao.ChatDao
+import com.sarang.torang.core.database.dao.chat.ChatDao
 import com.sarang.torang.core.database.dao.CommentDao
 import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.FeedDao
@@ -27,7 +27,7 @@ import com.sarang.torang.core.database.dao.SearchedRestaurantDao
 import com.sarang.torang.core.database.dao.UserDao
 
 import com.sarang.torang.core.database.model.alarm.AlarmEntity
-import com.sarang.torang.core.database.model.chat.ChatEntity
+import com.sarang.torang.core.database.model.chat.ChatMessageEntity
 import com.sarang.torang.core.database.model.chat.ChatImageEntity
 import com.sarang.torang.core.database.model.chat.ChatParticipantsEntity
 import com.sarang.torang.core.database.model.chat.ChatRoomEntity
@@ -64,7 +64,7 @@ import com.sarang.torang.workers.TorangDatabaseWorker
         FavoriteEntity::class,
         CommentEntity::class,
         MyFeedEntity::class,
-        ChatEntity::class,
+        ChatMessageEntity::class,
         ChatRoomEntity::class,
         ChatParticipantsEntity::class,
         ChatImageEntity::class,

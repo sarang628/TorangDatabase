@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 @Entity(
     foreignKeys = [
         ForeignKey(
-            entity = ChatEntity::class,
+            entity = ChatMessageEntity::class,
             parentColumns = ["uuid"],
             childColumns = ["parentUuid"],
             onUpdate = ForeignKey.CASCADE,

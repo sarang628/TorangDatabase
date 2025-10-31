@@ -8,7 +8,7 @@ import com.sarang.torang.core.database.model.user.UserEntity
 @Entity
 data class ChatEntityWithUser(
     @Embedded
-    val chatEntity: ChatEntity,
+    val chatEntity: ChatMessageEntity,
     @Relation(parentColumn = "userId", entityColumn = "userId")
     val userEntity: UserEntity,
     @Relation(parentColumn = "uuid", entityColumn = "parentUuid")

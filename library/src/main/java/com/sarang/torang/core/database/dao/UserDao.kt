@@ -39,10 +39,9 @@ interface UserDao {
     @Query("update UserEntity set userName = :userName ,profilePicUrl = :profilePicUrl  where userId = :userId")
     suspend fun updateByChatRoom(userId: Int, userName: String, profilePicUrl: String)
 
-    //TODO:: 데이터 변경하기
     @Transaction
-    suspend fun insertOrUpdateUser(/*users: List<ChatUserApiModel>*/) {
-        /*users.forEach { user ->
+    suspend fun insertOrUpdateUser(users: List<UserEntity>) {
+        users.forEach { user ->
             if (exists(user.userId) > 0) {
                 updateByChatRoom(
                     user.userId,
@@ -66,6 +65,6 @@ interface UserDao {
                     )
                 )
             }
-        }*/
+        }
     }
 }
