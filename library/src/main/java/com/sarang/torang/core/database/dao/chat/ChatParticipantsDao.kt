@@ -9,8 +9,8 @@ import com.sarang.torang.core.database.model.chat.ChatParticipantsEntity
 @Dao
 interface ChatParticipantsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertParticipants(list: List<ChatParticipantsEntity>)
+    suspend fun addAll(list: List<ChatParticipantsEntity>)
 
     @Query("Delete from ChatParticipantsEntity")
-    suspend fun deleteAllParticipants()
+    suspend fun deleteAll()
 }

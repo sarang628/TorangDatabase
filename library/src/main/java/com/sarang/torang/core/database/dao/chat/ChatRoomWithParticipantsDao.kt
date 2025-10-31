@@ -13,13 +13,13 @@ interface ChatRoomWithParticipantsDao {
         FROM ChatRoomEntity
         ORDER BY createDate DESC
         """)
-    fun getChatRoom(): Flow<List<ChatRoomWithParticipantsEntity>>
+    fun findAll(): Flow<List<ChatRoomWithParticipantsEntity>>
 
     @Query("SELECT * FROM ChatParticipantsEntity WHERE roomId = :roomId")
-    fun getParticipantsWithUsersFlow(roomId: Int): Flow<List<ParticipantsWithUserEntity>?>
+    fun findByRoomIdFlow(roomId: Int): Flow<List<ParticipantsWithUserEntity>?>
 
     @Query("SELECT * FROM ChatParticipantsEntity WHERE roomId = :roomId")
-    suspend fun getParticipantsWithUsers(roomId: Int): List<ParticipantsWithUserEntity>?
+    suspend fun findByRoomId(roomId: Int): List<ParticipantsWithUserEntity>?
 
     @Query("""
         SELECT c.*, (select count(*) from ChatParticipantsEntity where roomId = c.roomId) count
@@ -30,5 +30,5 @@ interface ChatRoomWithParticipantsDao {
         and count = 2
         ORDER BY createDate DESC
         """)
-    suspend fun getChatRoomByUserId(userId: Int): ChatRoomWithParticipantsEntity?
+    suspend fun findByUserId(userId: Int): ChatRoomWithParticipantsEntity?
 }

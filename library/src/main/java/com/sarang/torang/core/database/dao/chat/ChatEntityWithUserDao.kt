@@ -7,13 +7,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ChatEntityWithUserDao {
-    @Query(
-        """
+    @Query("""
         SELECT *
         FROM ChatMessageEntity
         WHERE roomId = :roomId
         ORDER BY createDate DESC
-        """
-    )
-    fun getContents(roomId: Int): Flow<List<ChatEntityWithUser>>
+        """)
+    fun findByRoomId(roomId: Int): Flow<List<ChatEntityWithUser>>
 }
