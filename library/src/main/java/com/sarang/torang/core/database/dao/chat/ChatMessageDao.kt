@@ -11,22 +11,14 @@ import com.sarang.torang.core.database.model.chat.ChatRoomEntity
 interface ChatMessageDao {
 
     @Query("Delete from ChatMessageEntity")
-    suspend fun deleteAllChat()
+    suspend fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
-    suspend fun addAllChat(chatRoomEntity: List<ChatMessageEntity>)
+    suspend fun addAll(chatRoomEntity: List<ChatMessageEntity>)
 
     @Insert
-    suspend fun addChat(chatEntity: ChatMessageEntity)
+    suspend fun add(chatEntity: ChatMessageEntity)
 
-    @Query("delete from chatentity where uuid = :uuid")
+    @Query("delete from ChatMessageEntity where uuid = :uuid")
     suspend fun delete(uuid: String)
-
-
-    suspend fun saveAllChatRoom(result: List<ChatRoomEntity>) {
-        //deleteAllChatRoom()
-        //deleteAllParticipants()
-        //addAll(result)
-    }
-
 }
