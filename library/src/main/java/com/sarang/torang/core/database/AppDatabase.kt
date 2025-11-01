@@ -25,14 +25,13 @@ import com.sarang.torang.core.database.dao.ReviewDao
 import com.sarang.torang.core.database.dao.SearchDao
 import com.sarang.torang.core.database.dao.SearchedRestaurantDao
 import com.sarang.torang.core.database.dao.UserDao
-import com.sarang.torang.core.database.dao.chat.ChatEntityWithUserDao
+import com.sarang.torang.core.database.dao.chat.ChatUserMessageJoinDao
 import com.sarang.torang.core.database.dao.chat.ChatImageDao
 import com.sarang.torang.core.database.dao.chat.ChatParticipantsDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomWithParticipantsDao
 
 import com.sarang.torang.core.database.model.alarm.AlarmEntity
-import com.sarang.torang.core.database.model.chat.ChatEntityWithUser
 import com.sarang.torang.core.database.model.chat.ChatMessageEntity
 import com.sarang.torang.core.database.model.chat.ChatImageEntity
 import com.sarang.torang.core.database.model.chat.ChatParticipantsEntity
@@ -97,7 +96,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun searchedRestaurantDao()        : SearchedRestaurantDao
     abstract fun restaurantImageDao()           : RestaurantImageDao
     abstract fun chatRoomDao()                  : ChatRoomDao
-    abstract fun chatEntityWithUserDao()        : ChatEntityWithUserDao
+    abstract fun chatEntityWithUserDao()        : ChatUserMessageJoinDao
     abstract fun chatImageDao()                 : ChatImageDao
     abstract fun chatParticipantsDao()          : ChatParticipantsDao
     abstract fun chatRoomWithParticipantsDao()  : ChatRoomWithParticipantsDao

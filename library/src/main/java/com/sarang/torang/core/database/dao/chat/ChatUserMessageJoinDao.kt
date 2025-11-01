@@ -6,7 +6,7 @@ import com.sarang.torang.core.database.model.chat.ChatEntityWithUser
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface ChatEntityWithUserDao {
+interface ChatUserMessageJoinDao {
     @Query("""
         SELECT *
         FROM ChatMessageEntity

@@ -5,13 +5,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.gson.GsonBuilder
 import com.sarang.torang.api.ApiChat
 import com.sarang.torang.api.ApiLogin
-import com.sarang.torang.core.database.dao.chat.ChatEntityWithUserDao
+import com.sarang.torang.core.database.dao.chat.ChatUserMessageJoinDao
 import com.sarang.torang.core.database.dao.chat.ChatImageDao
 import com.sarang.torang.core.database.dao.chat.ChatMessageDao
 import com.sarang.torang.core.database.dao.chat.ChatParticipantsDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomWithParticipantsDao
-import com.sarang.torang.core.database.model.chat.ChatParticipantsEntity
 import com.sarang.torang.di.torang_database_di.chatParticipantsEntityList
 import com.sarang.torang.di.torang_database_di.chatRoomEntityList
 import com.sarang.torang.util.TorangRepositoryEncrypt
@@ -30,7 +29,7 @@ import javax.inject.Inject
 class ChatDaoTest {
     @get:Rule var hiltRule = HiltAndroidRule(this)
     @Inject lateinit var chatRoomDao                    : ChatRoomDao
-    @Inject lateinit var chatEntityWithUserDao          : ChatEntityWithUserDao
+    @Inject lateinit var chatEntityWithUserDao          : ChatUserMessageJoinDao
     @Inject lateinit var chatImageDao                   : ChatImageDao
     @Inject lateinit var chatMessageDao                 : ChatMessageDao
     @Inject lateinit var chatParticipantsDao            : ChatParticipantsDao
