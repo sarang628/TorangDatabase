@@ -29,11 +29,11 @@ import javax.inject.Inject
 class ChatDaoTest {
     @get:Rule var hiltRule = HiltAndroidRule(this)
     @Inject lateinit var chatRoomDao                    : ChatRoomDao
-    @Inject lateinit var chatEntityWithUserDao          : ChatUserMessageJoinDao
+    @Inject lateinit var chatUserMessageJoinDao         : ChatUserMessageJoinDao
     @Inject lateinit var chatImageDao                   : ChatImageDao
     @Inject lateinit var chatMessageDao                 : ChatMessageDao
     @Inject lateinit var chatParticipantsDao            : ChatParticipantsDao
-    @Inject lateinit var chatRoomWithParticipantsDao    : ChatRoomParticipantsJoinDao
+    @Inject lateinit var chatRoomParticipantsJoinDao    : ChatRoomParticipantsJoinDao
     @Inject lateinit var apiChat                        : ApiChat
     @Inject lateinit var login                          : ApiLogin
     @Inject lateinit var encrype                        : TorangRepositoryEncrypt
@@ -56,6 +56,6 @@ class ChatDaoTest {
         // 채팅방 상태 리스트 넣기
         chatParticipantsDao.addAll(result.chatParticipantsEntityList)
 
-        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(chatEntityWithUserDao.findByRoomId(1)))
+        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(chatRoomParticipantsJoinDao))
     }
 }
