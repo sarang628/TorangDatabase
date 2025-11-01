@@ -10,7 +10,7 @@ import com.sarang.torang.core.database.dao.chat.ChatImageDao
 import com.sarang.torang.core.database.dao.chat.ChatMessageDao
 import com.sarang.torang.core.database.dao.chat.ChatParticipantsDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomDao
-import com.sarang.torang.core.database.dao.chat.ChatRoomWithParticipantsDao
+import com.sarang.torang.core.database.dao.chat.ChatRoomParticipantsJoinDao
 import com.sarang.torang.di.torang_database_di.chatParticipantsEntityList
 import com.sarang.torang.di.torang_database_di.chatRoomEntityList
 import com.sarang.torang.util.TorangRepositoryEncrypt
@@ -33,7 +33,7 @@ class ChatDaoTest {
     @Inject lateinit var chatImageDao                   : ChatImageDao
     @Inject lateinit var chatMessageDao                 : ChatMessageDao
     @Inject lateinit var chatParticipantsDao            : ChatParticipantsDao
-    @Inject lateinit var chatRoomWithParticipantsDao    : ChatRoomWithParticipantsDao
+    @Inject lateinit var chatRoomWithParticipantsDao    : ChatRoomParticipantsJoinDao
     @Inject lateinit var apiChat                        : ApiChat
     @Inject lateinit var login                          : ApiLogin
     @Inject lateinit var encrype                        : TorangRepositoryEncrypt

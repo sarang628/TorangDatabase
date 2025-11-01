@@ -29,7 +29,7 @@ import com.sarang.torang.core.database.dao.chat.ChatUserMessageJoinDao
 import com.sarang.torang.core.database.dao.chat.ChatImageDao
 import com.sarang.torang.core.database.dao.chat.ChatParticipantsDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomDao
-import com.sarang.torang.core.database.dao.chat.ChatRoomWithParticipantsDao
+import com.sarang.torang.core.database.dao.chat.ChatRoomParticipantsJoinDao
 
 import com.sarang.torang.core.database.model.alarm.AlarmEntity
 import com.sarang.torang.core.database.model.chat.ChatMessageEntity
@@ -99,7 +99,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun chatEntityWithUserDao()        : ChatUserMessageJoinDao
     abstract fun chatImageDao()                 : ChatImageDao
     abstract fun chatParticipantsDao()          : ChatParticipantsDao
-    abstract fun chatRoomWithParticipantsDao()  : ChatRoomWithParticipantsDao
+    abstract fun chatRoomWithParticipantsDao()  : ChatRoomParticipantsJoinDao
 
     companion object {
         // For Singleton instantiation
