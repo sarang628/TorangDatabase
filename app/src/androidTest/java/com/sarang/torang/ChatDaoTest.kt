@@ -2,7 +2,6 @@ package com.sarang.torang
 
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.sarang.torang.api.ApiChat
 import com.sarang.torang.api.ApiLogin
@@ -13,12 +12,11 @@ import com.sarang.torang.core.database.dao.chat.ChatParticipantsDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomWithParticipantsDao
 import com.sarang.torang.core.database.model.chat.ChatParticipantsEntity
-import com.sarang.torang.core.database.model.chat.ChatRoomEntity
-import com.sarang.torang.core.database.model.chat.ParticipantsWithUserEntity
+import com.sarang.torang.di.torang_database_di.chatParticipantsEntityList
+import com.sarang.torang.di.torang_database_di.chatRoomEntityList
 import com.sarang.torang.util.TorangRepositoryEncrypt
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -55,20 +53,10 @@ class ChatDaoTest {
     @Test
     fun insert() = runTest{
         val result = apiChat.getChatRoom(token)
-        val rooms = result.map { ChatRoomEntity(it.roomId, it.createDate) }
-        //chatRoomDao.addAll()
-        chatRoomDao.addAll(rooms)
-
+        chatRoomDao.addAll(result.chatRoomEntityList)
         // 채팅방 상태 리스트 넣기
-        val flatUser = result.flatMap { room ->
-            room.users.map {
-                ChatParticipantsEntity(
-                    userId = it.userId,
-                    roomId = room.roomId
-                )
-            }
-        }
+        chatParticipantsDao.addAll(result.chatParticipantsEntityList)
 
-        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(flatUser))
+        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(chatEntityWithUserDao.findByRoomId(1)))
     }
 }
