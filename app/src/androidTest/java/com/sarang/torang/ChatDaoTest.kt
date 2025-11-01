@@ -16,6 +16,7 @@ import com.sarang.torang.di.torang_database_di.chatRoomEntityList
 import com.sarang.torang.util.TorangRepositoryEncrypt
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -53,9 +54,9 @@ class ChatDaoTest {
     fun insert() = runTest{
         val result = apiChat.getChatRoom(token)
         chatRoomDao.addAll(result.chatRoomEntityList)
-        // 채팅방 상태 리스트 넣기
         chatParticipantsDao.addAll(result.chatParticipantsEntityList)
 
-        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(chatRoomParticipantsJoinDao))
+        val list = chatRoomParticipantsJoinDao.findAll().first()
+        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(list))
     }
 }
