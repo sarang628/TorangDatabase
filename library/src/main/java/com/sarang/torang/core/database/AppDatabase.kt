@@ -9,7 +9,6 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.sarang.torang.core.database.dao.AlarmDao
-import com.sarang.torang.core.database.dao.chat.ChatMessageDao
 import com.sarang.torang.core.database.dao.CommentDao
 import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.FeedDao
@@ -26,12 +25,12 @@ import com.sarang.torang.core.database.dao.SearchDao
 import com.sarang.torang.core.database.dao.SearchedRestaurantDao
 import com.sarang.torang.core.database.dao.UserDao
 import com.sarang.torang.core.database.dao.chat.ChatImageDao
+import com.sarang.torang.core.database.dao.chat.ChatMessageDao
 import com.sarang.torang.core.database.dao.chat.ChatParticipantsDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomDao
-
 import com.sarang.torang.core.database.model.alarm.AlarmEntity
-import com.sarang.torang.core.database.model.chat.ChatMessageEntity
 import com.sarang.torang.core.database.model.chat.ChatImageEntity
+import com.sarang.torang.core.database.model.chat.ChatMessageEntity
 import com.sarang.torang.core.database.model.chat.ChatParticipantsEntity
 import com.sarang.torang.core.database.model.chat.ChatRoomEntity
 import com.sarang.torang.core.database.model.comment.CommentEntity
@@ -39,7 +38,7 @@ import com.sarang.torang.core.database.model.favorite.FavoriteEntity
 import com.sarang.torang.core.database.model.feed.FeedEntity
 import com.sarang.torang.core.database.model.feed.MyFeedEntity
 import com.sarang.torang.core.database.model.image.RestaurantImageEntity
-import com.sarang.torang.core.database.model.image.ReviewImageEntity;
+import com.sarang.torang.core.database.model.image.ReviewImageEntity
 import com.sarang.torang.core.database.model.like.LikeEntity
 import com.sarang.torang.core.database.model.restaurant.MenuEntity
 import com.sarang.torang.core.database.model.restaurant.RestaurantEntity
@@ -72,8 +71,10 @@ import com.sarang.torang.workers.TorangDatabaseWorker
         ChatParticipantsEntity::class,
         ChatImageEntity::class,
         SearchedRestaurantEntity::class,
-        RestaurantImageEntity::class,
-    ], version = 1, exportSchema = false
+        RestaurantImageEntity::class
+    ],
+    version = 1,
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao()                      : UserDao

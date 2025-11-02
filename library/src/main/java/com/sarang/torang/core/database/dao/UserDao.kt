@@ -12,14 +12,17 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
     @Query("SELECT * FROM UserEntity")
-    fun getAll(): Flow<List<UserEntity>>
+    fun getAllFlow(): Flow<List<UserEntity>>
+
+    @Query("SELECT * FROM UserEntity")
+    suspend fun getAll(): List<UserEntity>
 
     @Query("SELECT * FROM UserEntity WHERE userId IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Transaction
-    suspend fun insertAll(users: List<UserEntity>)
+    suspend fun addAll(users: List<UserEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: UserEntity)

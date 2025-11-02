@@ -148,7 +148,7 @@ interface FeedDao {
         favorites: List<FavoriteEntity>,
     ) {
         pictureDao.insertAll(reviewImages)
-        userDao.insertAll(userList)
+        userDao.addAll(userList)
         likeDao.insertLikes(likeList)
         favoriteDao.insertAll(favorites)
         //마지막에 안넣어주면 앱 강제종료

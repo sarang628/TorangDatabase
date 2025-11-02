@@ -12,5 +12,5 @@ import com.sarang.torang.core.database.model.user.UserEntity
 data class ChatParticipants(
     @Embedded val participantsEntity: ChatParticipantsEntity,
     @Relation(parentColumn = "userId", entityColumn = "userId")
-    val userEntity: UserEntity
+    val userEntity: UserEntity?
 )

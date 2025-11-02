@@ -20,4 +20,7 @@ interface ChatParticipantsDao {
     fun findByRoomIdFlow(roomId: Int): Flow<List<ChatParticipants>?>
     @Query("SELECT * FROM ChatParticipantsEntity")
     suspend fun findAll() : List<ChatParticipantsEntity>
+
+    @Query("SELECT * FROM ChatParticipantsEntity")
+    fun findAllFlow() : Flow<List<ChatParticipantsEntity>>
 }
