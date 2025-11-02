@@ -16,7 +16,7 @@ data class ChatRoom(
 )
 
 data class ChatRoomWithUsers(
-    @Embedded val chatRoom: ChatRoomEntity,
-    @Embedded val participants: ChatParticipantsEntity,
-    @Embedded val user: UserEntity
+    @Embedded(prefix = "room_") val chatRoom: ChatRoomEntity?,
+    @Embedded(prefix = "participant_") val participants: ChatParticipantsEntity,
+    @Embedded(prefix = "user_") val user: UserEntity?
 )

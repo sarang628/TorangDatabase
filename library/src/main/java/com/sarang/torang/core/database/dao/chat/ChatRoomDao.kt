@@ -40,10 +40,25 @@ interface ChatRoomDao {
     suspend fun findByRoomId(roomId: Int): List<ChatParticipants>?
 
     @Query("""
-    SELECT chatRoom.*, participants.*, user.*
-    FROM ChatRoomEntity AS chatRoom
-    JOIN ChatParticipantsEntity AS participants ON chatRoom.roomId = participants.roomId
-    JOIN UserEntity AS user ON participants.userId = user.userId
+    SELECT  c.createDate    as room_createDate,
+            c.roomId        as room_roomId,
+            p._id           as participant__id, 
+            p.roomId        as participant_roomId, 
+            p.userId        as participant_userId,
+            u.userId        as user_userId,
+            u.userName      as user_userName,
+            u.email         as user_email,
+            u.loginPlatform as user_loginPlatform,
+            u.createDate    as user_createDate,
+            u.accessToken   as user_accessToken,
+            u.profilePicUrl as user_profilePicUrl,
+            u.point         as user_point,
+            u.reviewCount   as user_reviewCount,
+            u.followers     as user_followers,
+            u.`following`   as user_following
+    FROM ChatParticipantsEntity AS p
+    LEFT OUTER JOIN ChatRoomEntity    AS c ON c.roomId = p.roomId 
+    LEFT OUTER JOIN UserEntity        AS u ON p.userId = u.userId
     """)
     fun findAll1(): List<ChatRoomWithUsers>
 }

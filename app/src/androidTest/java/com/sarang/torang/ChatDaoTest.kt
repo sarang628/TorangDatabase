@@ -57,8 +57,10 @@ class ChatDaoTest {
     }
 
     @Test
-    fun chatRoomTest() = run {
-        val list = chatRoomDao.findAll1().first()
-        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(list))
+    fun chatRoomTest() = runTest {
+        val participants = chatParticipantsDao.findAll()
+        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(participants))
+        val list1 = chatRoomDao.findAll1().first()
+        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(list1))
     }
 }
