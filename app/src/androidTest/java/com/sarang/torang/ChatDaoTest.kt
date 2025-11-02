@@ -5,12 +5,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.gson.GsonBuilder
 import com.sarang.torang.api.ApiChat
 import com.sarang.torang.api.ApiLogin
-import com.sarang.torang.core.database.dao.chat.ChatUserMessageJoinDao
 import com.sarang.torang.core.database.dao.chat.ChatImageDao
 import com.sarang.torang.core.database.dao.chat.ChatMessageDao
 import com.sarang.torang.core.database.dao.chat.ChatParticipantsDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomDao
-import com.sarang.torang.core.database.dao.chat.ChatRoomParticipantsJoinDao
 import com.sarang.torang.di.torang_database_di.chatParticipantsEntityList
 import com.sarang.torang.di.torang_database_di.chatRoomEntityList
 import com.sarang.torang.util.TorangRepositoryEncrypt
@@ -30,11 +28,9 @@ import javax.inject.Inject
 class ChatDaoTest {
     @get:Rule var hiltRule = HiltAndroidRule(this)
     @Inject lateinit var chatRoomDao                    : ChatRoomDao
-    @Inject lateinit var chatUserMessageJoinDao         : ChatUserMessageJoinDao
     @Inject lateinit var chatImageDao                   : ChatImageDao
     @Inject lateinit var chatMessageDao                 : ChatMessageDao
     @Inject lateinit var chatParticipantsDao            : ChatParticipantsDao
-    @Inject lateinit var chatRoomParticipantsJoinDao    : ChatRoomParticipantsJoinDao
     @Inject lateinit var apiChat                        : ApiChat
     @Inject lateinit var login                          : ApiLogin
     @Inject lateinit var encrype                        : TorangRepositoryEncrypt
@@ -48,15 +44,21 @@ class ChatDaoTest {
     fun before() = runTest{
         val result = login.emailLogin("sry_ang@naver.com", encrype.encrypt("Torang!234"))
         token = result.token
+
+        val chatRooms = apiChat.getChatRoom(token)
+        chatRoomDao.addAll(chatRooms.chatRoomEntityList)
+        chatParticipantsDao.addAll(chatRooms.chatParticipantsEntityList)
     }
 
     @Test
-    fun insert() = runTest{
-        val result = apiChat.getChatRoom(token)
-        chatRoomDao.addAll(result.chatRoomEntityList)
-        chatParticipantsDao.addAll(result.chatParticipantsEntityList)
+    fun findAllTest() = runTest{
+        val list = chatRoomDao.findAll().first()
+        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(list))
+    }
 
-        val list = chatRoomParticipantsJoinDao.findAll().first()
+    @Test
+    fun chatRoomTest() = run {
+        val list = chatRoomDao.findAll1().first()
         Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(list))
     }
 }

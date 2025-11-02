@@ -6,7 +6,7 @@ import androidx.room.Relation
 import com.sarang.torang.core.database.model.user.UserEntity
 
 @Entity
-data class ChatEntityWithUser(
+data class ChatMessage(
     @Embedded
     val chatEntity: ChatMessageEntity,
     @Relation(parentColumn = "userId", entityColumn = "userId")
