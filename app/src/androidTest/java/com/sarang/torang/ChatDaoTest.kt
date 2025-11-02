@@ -10,8 +10,8 @@ import com.sarang.torang.core.database.dao.chat.ChatImageDao
 import com.sarang.torang.core.database.dao.chat.ChatMessageDao
 import com.sarang.torang.core.database.dao.chat.ChatParticipantsDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomDao
-import com.sarang.torang.core.database.model.chat.ChatParticipants
-import com.sarang.torang.core.database.model.chat.ChatRoom
+import com.sarang.torang.core.database.model.chat.embedded.ChatParticipantUser
+import com.sarang.torang.core.database.model.chat.embedded.ChatRoomParticipants
 import com.sarang.torang.di.torang_database_di.chatParticipantsEntityList
 import com.sarang.torang.di.torang_database_di.chatRoomEntityList
 import com.sarang.torang.di.torang_database_di.users
@@ -77,10 +77,10 @@ class ChatDaoTest {
             .map { (rooms, participants, users) ->
                 rooms.map { room ->
                     val roomParticipants = participants.filter { it.roomId == room.roomId }
-                    ChatRoom(
-                        chatRoomEntity = room,
+                    ChatRoomParticipants(
+                        chatRoom = room,
                         chatParticipants = roomParticipants.map { p ->
-                            ChatParticipants(
+                            ChatParticipantUser(
                                 participantsEntity = p,
                                 userEntity = users.find { it.userId == p.userId }
                             )

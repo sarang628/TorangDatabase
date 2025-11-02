@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sarang.torang.core.database.model.chat.ChatMessage
+import com.sarang.torang.core.database.model.chat.embedded.ChatMessageUserImages
 import com.sarang.torang.core.database.model.chat.ChatMessageEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -24,5 +24,5 @@ interface ChatMessageDao {
         WHERE roomId = :roomId
         ORDER BY createDate DESC
         """)
-    fun findByRoomId(roomId: Int): Flow<List<ChatMessage>>
+    fun findByRoomId(roomId: Int): Flow<List<ChatMessageUserImages>>
 }

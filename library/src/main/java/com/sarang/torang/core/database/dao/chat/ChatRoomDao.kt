@@ -4,8 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sarang.torang.core.database.model.chat.ChatParticipants
-import com.sarang.torang.core.database.model.chat.ChatRoom
+import com.sarang.torang.core.database.model.chat.embedded.ChatParticipantUser
 import com.sarang.torang.core.database.model.chat.ChatRoomEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -36,5 +35,5 @@ interface ChatRoomDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM ChatParticipantsEntity WHERE roomId = :roomId")
-    suspend fun findByRoomId(roomId: Int): List<ChatParticipants>?
+    suspend fun findByRoomId(roomId: Int): List<ChatParticipantUser>?
 }
