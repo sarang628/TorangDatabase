@@ -10,7 +10,6 @@ import com.sarang.torang.core.database.dao.chat.ChatImageDao
 import com.sarang.torang.core.database.dao.chat.ChatMessageDao
 import com.sarang.torang.core.database.dao.chat.ChatParticipantsDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomDao
-import com.sarang.torang.core.database.model.chat.embedded.ChatParticipantUser
 import com.sarang.torang.core.database.model.chat.embedded.ChatRoomParticipants
 import com.sarang.torang.di.torang_database_di.chatParticipantsEntityList
 import com.sarang.torang.di.torang_database_di.chatRoomEntityList
@@ -63,7 +62,7 @@ class ChatDaoTest {
     fun findAllTest() = runTest{
         val roomsFlow = chatRoomDao.findAllFlow()
         val participantsFlow = chatParticipantsDao.findAllFlow()
-        val userFlow = userDao.getAllFlow()
+        val userFlow = userDao.findAllFlow()
 
         val result = combine(
             roomsFlow,
@@ -79,12 +78,45 @@ class ChatDaoTest {
                     val roomParticipants = participants.filter { it.roomId == room.roomId }
                     ChatRoomParticipants(
                         chatRoom = room,
-                        chatParticipants = roomParticipants.map { p ->
+                        chatParticipants = listOf()/*roomParticipants.map { p ->
                             ChatParticipantUser(
                                 participantsEntity = p,
                                 userEntity = users.find { it.userId == p.userId }
                             )
-                        }
+                        }*/
+                    )
+                }
+            }
+            .first()
+
+
+        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(result))
+    }
+
+    @Test
+    fun findAllChatRoomParticipantsFlowTest() = runTest{
+        val roomsFlow = chatRoomDao.findAllChatRoomParticipantsFlow()
+        val userFlow = userDao.findAllFlow()
+
+        val result = combine(
+            roomsFlow,
+            userFlow
+        ) { rooms, users ->
+            Pair(rooms, users)
+        }.filter { (rooms, users) ->
+            rooms.isNotEmpty() && users.isNotEmpty()
+        }
+            .map { (rooms, users) ->
+                rooms.map { room ->
+                    val roomParticipants = room.chatParticipants.filter { it.roomId == room.chatRoom.roomId }
+                    ChatRoomParticipants(
+                        chatRoom = room.chatRoom,
+                        chatParticipants = listOf()/*roomParticipants.map { p ->
+                            ChatParticipantUser(
+                                participantsEntity = p,
+                                userEntity = users.find { it.userId == p.userId }
+                            )
+                        }*/
                     )
                 }
             }

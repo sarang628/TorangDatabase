@@ -12,29 +12,32 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
     @Query("SELECT * FROM UserEntity")
-    fun getAllFlow(): Flow<List<UserEntity>>
+    fun findAllFlow(): Flow<List<UserEntity>>
 
     @Query("SELECT * FROM UserEntity")
-    suspend fun getAll(): List<UserEntity>
+    suspend fun findAll(): List<UserEntity>
 
     @Query("SELECT * FROM UserEntity WHERE userId IN (:userIds)")
-    fun loadAllByIds(userIds: IntArray): List<UserEntity>
+    fun findAllById(userIds: IntArray): List<UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Transaction
     suspend fun addAll(users: List<UserEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUser(user: UserEntity)
+    suspend fun addUser(user: UserEntity)
 
     @Delete
     suspend fun delete(user: UserEntity)
 
     @Query("select * from UserEntity where userId = (:userId)")
-    fun getUser(userId: Int): Flow<UserEntity>
+    fun findByIdFlow(userId: Int): Flow<UserEntity>
+
+    @Query("select * from UserEntity where userId = (:userId)")
+    suspend fun findById(userId: Int): UserEntity?
 
     @Query("update UserEntity set userName = :userName ,profilePicUrl = :profilePicUrl  where userId = :userId")
-    suspend fun updateUser(userId: Int, userName: String, profilePicUrl: String)
+    suspend fun update(userId: Int, userName: String, profilePicUrl: String)
 
     @Query("SELECT COUNT(*) FROM UserEntity WHERE userId = :userId")
     suspend fun exists(userId: Int): Int
@@ -52,7 +55,7 @@ interface UserDao {
                     user.profilePicUrl
                 )
             } else {
-                insertUser(
+                addUser(
                     UserEntity(
                         userId = user.userId,
                         userName = user.userName,

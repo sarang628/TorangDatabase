@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         var db = AppDatabase.getInstance(this)
-        db.userDao().getUser(0)
+        db.userDao().findByIdFlow(0)
         setContent {
             TorangDatabaseTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
