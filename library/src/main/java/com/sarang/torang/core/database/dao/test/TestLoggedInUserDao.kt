@@ -19,7 +19,7 @@ fun TestLoggedInUserDao(loggedInUserDao: LoggedInUserDao) {
     var isLogin by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = "", block = {
-        loggedInUserDao.getLoggedInUser1()?.let {
+        loggedInUserDao.getLoggedInUser()?.let {
             isLogin = true
         }
     })
