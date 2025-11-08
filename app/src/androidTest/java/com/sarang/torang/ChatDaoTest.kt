@@ -95,33 +95,9 @@ class ChatDaoTest {
 
     @Test
     fun findAllChatRoomParticipantsFlowTest() = runTest{
-        val roomsFlow = chatRoomDao.findAllChatRoomParticipantsFlow()
-        val userFlow = userDao.findAllFlow()
+        val roomsFlow = chatRoomDao.findAllChatRoom(chatRoomDao, userDao)
 
-        val result = combine(
-            roomsFlow,
-            userFlow
-        ) { rooms, users ->
-            Pair(rooms, users)
-        }.filter { (rooms, users) ->
-            rooms.isNotEmpty() && users.isNotEmpty()
-        }
-            .map { (rooms, users) ->
-                rooms.map { room ->
-                    val roomParticipants = room.chatParticipants.filter { it.roomId == room.chatRoom.roomId }
-                    ChatRoomParticipants(
-                        chatRoom = room.chatRoom,
-                        chatParticipants = listOf()/*roomParticipants.map { p ->
-                            ChatParticipantUser(
-                                participantsEntity = p,
-                                userEntity = users.find { it.userId == p.userId }
-                            )
-                        }*/
-                    )
-                }
-            }
-            .first()
-
+        val result = roomsFlow.first()
 
         Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(result))
     }
