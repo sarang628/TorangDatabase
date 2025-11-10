@@ -10,6 +10,8 @@ import com.sarang.torang.core.database.dao.chat.ChatImageDao
 import com.sarang.torang.core.database.dao.chat.ChatMessageDao
 import com.sarang.torang.core.database.dao.chat.ChatParticipantsDao
 import com.sarang.torang.core.database.dao.chat.ChatRoomDao
+import com.sarang.torang.core.database.model.chat.ChatParticipantsEntity
+import com.sarang.torang.core.database.model.chat.ChatRoomEntity
 import com.sarang.torang.core.database.model.chat.embedded.ChatRoomParticipants
 import com.sarang.torang.di.torang_database_di.chatParticipantsEntityList
 import com.sarang.torang.di.torang_database_di.chatRoomEntityList
@@ -17,9 +19,11 @@ import com.sarang.torang.di.torang_database_di.users
 import com.sarang.torang.util.TorangRepositoryEncrypt
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -40,7 +44,7 @@ class ChatDaoTest {
     @Inject lateinit var userDao                        : UserDao
     @Inject lateinit var apiChat                        : ApiChat
     @Inject lateinit var login                          : ApiLogin
-    @Inject lateinit var encrype                        : TorangRepositoryEncrypt
+    @Inject lateinit var encrypt                        : TorangRepositoryEncrypt
     @Before fun setUp() { hiltRule.inject() }
 
     var token = ""
@@ -49,13 +53,52 @@ class ChatDaoTest {
 
     @Before
     fun before() = runTest{
-        val result = login.emailLogin("sry_ang@naver.com", encrype.encrypt("Torang!234"))
+
+    }
+
+    suspend fun callApi(){
+        val result = login.emailLogin("sry_ang@naver.com", encrypt.encrypt("Torang!234"))
         token = result.token
 
         val chatRooms = apiChat.getChatRoom(token)
         chatRoomDao.addAll(chatRooms.chatRoomEntityList)
         chatParticipantsDao.addAll(chatRooms.chatParticipantsEntityList)
         userDao.addAll(chatRooms.users)
+    }
+
+    @Test
+    fun addSingleRoomTest() = runTest{
+        chatRoomDao.addAll(listOf(
+            ChatRoomEntity(
+                roomId = 1,
+                createDate = "123"
+            )
+        ))
+
+        val chatRooms = chatRoomDao.findAllChatRoom(chatRoomDao, userDao)
+        val result = chatRooms.first()
+        assertEquals(1, result[0].chatRoom.roomId)
+        assertEquals(1, result.size)
+        assertEquals(0, result[0].chatParticipants.size)
+    }
+
+    @Test
+    fun addSingleRoomAndParticipantsTest() = runTest{
+        addSingleRoomTest()
+
+        chatParticipantsDao.addAll(listOf(
+            ChatParticipantsEntity(
+                _id = 0,
+                roomId = 1,
+                userId = 1
+            )
+        ))
+
+        val chatRooms = chatRoomDao.findAllChatRoom(chatRoomDao, userDao)
+        val result = chatRooms.first()
+        assertEquals(1, result[0].chatRoom.roomId)
+        assertEquals(1, result.size)
+        assertEquals(0, result[0].chatParticipants.size)
     }
 
     @Test
