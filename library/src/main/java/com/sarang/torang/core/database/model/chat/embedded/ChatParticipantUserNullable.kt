@@ -10,7 +10,8 @@ import com.sarang.torang.core.database.model.user.UserEntity
  * @param userId 채팅 상대방 userId
  */
 @Entity
-data class ChatParticipantUser(
-    val participantsEntity: ChatParticipantsEntity,
-    val userEntity: UserEntity
+data class ChatParticipantUserNullable(
+    @Embedded val participantsEntity: ChatParticipantsEntity,
+    @Relation(parentColumn = "userId", entityColumn = "userId")
+    val userEntity: UserEntity?
 )
