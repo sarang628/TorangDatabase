@@ -17,7 +17,7 @@ interface ChatParticipantsDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM ChatParticipantsEntity WHERE roomId = :roomId")
-    fun findByRoomIdFlow(roomId: Int): Flow<List<ChatParticipantUser>?>
+    suspend fun findByRoomId(roomId: Int): List<ChatParticipantUser>
     @Query("SELECT * FROM ChatParticipantsEntity")
     suspend fun findAll() : List<ChatParticipantsEntity>
 
