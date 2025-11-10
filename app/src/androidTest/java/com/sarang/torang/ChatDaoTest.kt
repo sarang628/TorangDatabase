@@ -13,6 +13,7 @@ import com.sarang.torang.core.database.dao.chat.ChatRoomDao
 import com.sarang.torang.core.database.model.chat.ChatParticipantsEntity
 import com.sarang.torang.core.database.model.chat.ChatRoomEntity
 import com.sarang.torang.core.database.model.chat.embedded.ChatRoomParticipants
+import com.sarang.torang.core.database.model.user.UserEntity
 import com.sarang.torang.di.torang_database_di.chatParticipantsEntityList
 import com.sarang.torang.di.torang_database_di.chatRoomEntityList
 import com.sarang.torang.di.torang_database_di.users
@@ -84,7 +85,12 @@ class ChatDaoTest {
 
     @Test
     fun addSingleRoomAndParticipantsTest() = runTest{
-        addSingleRoomTest()
+        chatRoomDao.addAll(listOf(
+            ChatRoomEntity(
+                roomId = 1,
+                createDate = "123"
+            )
+        ))
 
         chatParticipantsDao.addAll(listOf(
             ChatParticipantsEntity(
@@ -94,11 +100,16 @@ class ChatDaoTest {
             )
         ))
 
+        userDao.addUser(UserEntity(
+            userId = 1,
+            userName = ""
+        ))
+
         val chatRooms = chatRoomDao.findAllChatRoom(chatRoomDao, userDao)
         val result = chatRooms.first()
         assertEquals(1, result[0].chatRoom.roomId)
         assertEquals(1, result.size)
-        assertEquals(0, result[0].chatParticipants.size)
+        assertEquals(1, result[0].chatParticipants.size)
     }
 
     @Test

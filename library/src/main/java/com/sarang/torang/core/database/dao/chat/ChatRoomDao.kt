@@ -65,7 +65,7 @@ interface ChatRoomDao {
                 ChatRoomUser(
                     chatRoom = it.chatRoom,
                     chatParticipants = it.chatParticipants.filter {
-                        userDao.findById(it.userId) == null
+                        userDao.findById(it.userId) != null
                     }.map {
                         ChatParticipantUser(
                             participantsEntity = it,

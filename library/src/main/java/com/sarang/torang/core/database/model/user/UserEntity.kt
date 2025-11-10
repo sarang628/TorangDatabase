@@ -6,17 +6,17 @@ import com.google.gson.GsonBuilder
 
 @Entity
 data class UserEntity(
-    @PrimaryKey val userId: Int,
-    val userName: String,
-    val email: String,
-    val loginPlatform: String,
-    val createDate: String,
-    val accessToken: String,
-    val profilePicUrl: String,
-    val point: Int,
-    val reviewCount: String,
-    val followers: String,
-    val following: String
+    @PrimaryKey val userId  : Int       = -1,
+    val userName            : String    = "",
+    val email               : String    = "",
+    val loginPlatform       : String    = "",
+    val createDate          : String    = "",
+    val accessToken         : String    = "",
+    val profilePicUrl       : String    = "",
+    val point               : Int       = 0,
+    val reviewCount         : String    = "",
+    val followers           : String    = "",
+    val following           : String    = ""
 ) {
     override fun equals(other: Any?): Boolean {
         if (other is UserEntity) {
