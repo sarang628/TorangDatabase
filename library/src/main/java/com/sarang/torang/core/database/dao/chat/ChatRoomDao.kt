@@ -64,10 +64,12 @@ interface ChatRoomDao {
             it.map {
                 ChatRoomUser(
                     chatRoom = it.chatRoom,
-                    chatParticipants = it.chatParticipants.map {
-                        ChatParticipantUserNullable(
+                    chatParticipants = it.chatParticipants.filter {
+                        userDao.findById(it.userId) == null
+                    }.map {
+                        ChatParticipantUser(
                             participantsEntity = it,
-                            userEntity = userDao.findById(it.userId)
+                            userEntity = userDao.findById(it.userId)!!
                         )
                     }
                 )
