@@ -13,6 +13,7 @@ import com.sarang.torang.core.database.dao.chat.ChatRoomDao
 import com.sarang.torang.core.database.model.chat.ChatParticipantsEntity
 import com.sarang.torang.core.database.model.chat.ChatRoomEntity
 import com.sarang.torang.core.database.model.chat.embedded.ChatRoomParticipants
+import com.sarang.torang.core.database.model.chat.embedded.ChatRoomUser
 import com.sarang.torang.core.database.model.user.UserEntity
 import com.sarang.torang.di.torang_database_di.chatParticipantsEntityList
 import com.sarang.torang.di.torang_database_di.chatRoomEntityList
@@ -21,6 +22,7 @@ import com.sarang.torang.util.TorangRepositoryEncrypt
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
@@ -54,7 +56,7 @@ class ChatDaoTest {
 
     @Before
     fun before() = runTest{
-
+        chatRoomDao.deleteAll()
     }
 
     suspend fun callApi(){
@@ -67,31 +69,15 @@ class ChatDaoTest {
         userDao.addAll(chatRooms.users)
     }
 
-    @Test
-    fun addSingleRoomTest() = runTest{
+    private suspend fun addSingleRoom(){
         chatRoomDao.addAll(listOf(
             ChatRoomEntity(
                 roomId = 1,
                 createDate = "123"
             )
         ))
-
-        val chatRooms = chatRoomDao.findAllChatRoom(chatRoomDao, userDao)
-        val result = chatRooms.first()
-        assertEquals(1, result[0].chatRoom.roomId)
-        assertEquals(1, result.size)
-        assertEquals(0, result[0].chatParticipants.size)
     }
-
-    @Test
-    fun addSingleRoomAndParticipantsTest() = runTest{
-        chatRoomDao.addAll(listOf(
-            ChatRoomEntity(
-                roomId = 1,
-                createDate = "123"
-            )
-        ))
-
+    private suspend fun addParticipants(){
         chatParticipantsDao.addAll(listOf(
             ChatParticipantsEntity(
                 _id = 0,
@@ -104,47 +90,27 @@ class ChatDaoTest {
             userId = 1,
             userName = ""
         ))
+    }
 
+    @Test
+    fun addSingleRoomTest() = runTest{
+        addSingleRoom()
+        val chatRooms = chatRoomDao.findAllChatRoom(chatRoomDao, userDao)
+        val result = chatRooms.first()
+        assertEquals(1, result[0].chatRoom.roomId)
+        assertEquals(1, result.size)
+        assertEquals(0, result[0].chatParticipants.size)
+    }
+
+    @Test
+    fun addSingleRoomAndParticipantsTest() = runTest{
+        addSingleRoom()
+        addParticipants()
         val chatRooms = chatRoomDao.findAllChatRoom(chatRoomDao, userDao)
         val result = chatRooms.first()
         assertEquals(1, result[0].chatRoom.roomId)
         assertEquals(1, result.size)
         assertEquals(1, result[0].chatParticipants.size)
-    }
-
-    @Test
-    fun findAllTest() = runTest{
-        val roomsFlow = chatRoomDao.findAllFlow()
-        val participantsFlow = chatParticipantsDao.findAllFlow()
-        val userFlow = userDao.findAllFlow()
-
-        val result = combine(
-            roomsFlow,
-            participantsFlow,
-            userFlow
-        ) { rooms, participants, users ->
-            Triple(rooms, participants, users)
-        }.filter { (rooms, participants, users) ->
-                rooms.isNotEmpty() && participants.isNotEmpty() && users.isNotEmpty()
-            }
-            .map { (rooms, participants, users) ->
-                rooms.map { room ->
-                    val roomParticipants = participants.filter { it.roomId == room.roomId }
-                    ChatRoomParticipants(
-                        chatRoom = room,
-                        chatParticipants = listOf()/*roomParticipants.map { p ->
-                            ChatParticipantUser(
-                                participantsEntity = p,
-                                userEntity = users.find { it.userId == p.userId }
-                            )
-                        }*/
-                    )
-                }
-            }
-            .first()
-
-
-        Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(result))
     }
 
     @Test
@@ -155,4 +121,26 @@ class ChatDaoTest {
 
         Log.d(tag, GsonBuilder().setPrettyPrinting().create().toJson(result))
     }
+
+    @Test
+    fun deleteRoom() = runTest {
+        addSingleRoom()
+        addParticipants()
+        var chatRooms : Flow<List<ChatRoomUser>> = chatRoomDao.findAllChatRoom(chatRoomDao, userDao)
+        assertEquals(1, chatRooms.first()[0].chatRoom.roomId)
+        chatRoomDao.deleteById(1)
+        chatRooms = chatRoomDao.findAllChatRoom(chatRoomDao, userDao)
+        assertEquals(emptyList<ChatRoomUser>(), chatRooms.first())
+    }
+
+    @Test
+    fun deleteParticipantsByRoomId() = runTest {
+        addSingleRoom()
+        addParticipants()
+        val chatRooms = chatRoomDao.findAllChatRoom(chatRoomDao, userDao)
+        assertEquals(1, chatRooms.first()[0].chatParticipants.size)
+        chatParticipantsDao.deleteByRoomId(1)
+        assertEquals(0, chatRooms.first()[0].chatParticipants.size)
+    }
+
 }

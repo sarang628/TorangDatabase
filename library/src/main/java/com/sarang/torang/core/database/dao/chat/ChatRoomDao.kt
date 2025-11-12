@@ -19,47 +19,13 @@ interface ChatRoomDao {
         SELECT *
         FROM ChatRoomEntity
         ORDER BY createDate DESC
-        """)
-    fun findAllFlow(): Flow<List<ChatRoomEntity>>
-
+        """)                                fun findAllFlow(): Flow<List<ChatRoomEntity>>
     @Query("""
         SELECT *
         FROM ChatRoomEntity
         ORDER BY createDate DESC
-        """)
-    fun findAllChatRoomParticipantsFlow(): Flow<List<ChatRoomParticipants>>
-
-    @Query("""
-        SELECT c.*, (select count(*) from ChatParticipantsEntity where roomId = c.roomId) count
-        FROM ChatRoomEntity c, ChatParticipantsEntity p
-        Where 1=1
-        and c.roomId = p.roomId
-        and p.userId = :userId
-        and count = 2
-        ORDER BY createDate DESC
-        """)
-    suspend fun findByUserId(userId: Int): ChatRoomEntity?
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addAll(chatRoomEntity: List<ChatRoomEntity>)
-
-    @Query("Delete from ChatRoomEntity")
-    suspend fun deleteAll()
-
-    @Query("SELECT * FROM ChatParticipantsEntity WHERE roomId = :roomId")
-    suspend fun findByRoomIdNullable(roomId: Int): List<ChatParticipantUserNullable>
-
-    suspend fun findByRoomId(roomId: Int) : List<ChatParticipantUser> {
-        val result = findByRoomIdNullable(roomId)
-        return result.filter { it.userEntity == null }.map {
-            ChatParticipantUser(
-                participantsEntity = it.participantsEntity,
-                userEntity = it.userEntity!!
-            )
-        }
-    }
-
-    fun findAllChatRoom(chatRoomDao: ChatRoomDao, userDao: UserDao) : Flow<List<ChatRoomUser>> {
+        """)                                fun findAllChatRoomParticipantsFlow(): Flow<List<ChatRoomParticipants>>
+                                                              fun findAllChatRoom(chatRoomDao: ChatRoomDao, userDao: UserDao) : Flow<List<ChatRoomUser>> {
         return chatRoomDao.findAllChatRoomParticipantsFlow().map {
             it.map {
                 ChatRoomUser(
@@ -76,4 +42,34 @@ interface ChatRoomDao {
             }
         }
     }
+    @Query("""
+        SELECT c.*
+        , (select count(*) from ChatParticipantsEntity where roomId = c.roomId) count
+        FROM ChatRoomEntity c, ChatParticipantsEntity p
+        Where 1=1
+        and c.roomId = p.roomId
+        and p.userId = :userId
+        and count = 2
+        ORDER BY createDate DESC
+        """)                      suspend fun findByUserId(userId: Int): ChatRoomEntity?
+    @Query("""SELECT * 
+        FROM ChatParticipantsEntity WHERE roomId = :roomId
+        """)                        suspend fun findByRoomIdNullable(roomId: Int): List<ChatParticipantUserNullable>
+                                                      suspend fun findByRoomId(roomId: Int) : List<ChatParticipantUser> {
+        val result = findByRoomIdNullable(roomId)
+        return result.filter { it.userEntity == null }.map {
+            ChatParticipantUser(
+                participantsEntity = it.participantsEntity,
+                userEntity = it.userEntity!!
+            )
+        }
+    }
+    @Insert(onConflict = OnConflictStrategy.REPLACE)  suspend fun addAll(chatRoomEntity: List<ChatRoomEntity>)
+    @Query("""Delete 
+        from ChatRoomEntity
+        """)                          suspend fun deleteAll()
+    @Query(""" Delete
+        From ChatRoomEntity
+        Where roomId = :roomId
+    """)                          suspend fun deleteById(roomId : Int)
 }

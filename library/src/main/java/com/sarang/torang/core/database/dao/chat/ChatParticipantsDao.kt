@@ -11,17 +11,14 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ChatParticipantsDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addAll(list: List<ChatParticipantsEntity>)
-
-    @Query("Delete from ChatParticipantsEntity")
-    suspend fun deleteAll()
-
-    @Query("SELECT * FROM ChatParticipantsEntity WHERE roomId = :roomId")
-    suspend fun findByRoomIdNullable(roomId: Int): List<ChatParticipantUserNullable>
-
-
-    suspend fun findByRoomId(roomId: Int): List<ChatParticipantUser> {
+    @Query("""SELECT * 
+        FROM ChatParticipantsEntity""")                       suspend fun findAll() : List<ChatParticipantsEntity>
+    @Query("""SELECT * 
+        FROM ChatParticipantsEntity""")                               fun findAllFlow() : Flow<List<ChatParticipantsEntity>>
+    @Query("""SELECT * 
+        FROM ChatParticipantsEntity WHERE roomId = :roomId
+        """)                       suspend fun findByRoomIdNullable(roomId: Int): List<ChatParticipantUserNullable>
+                                                     suspend fun findByRoomId(roomId: Int): List<ChatParticipantUser> {
         return findByRoomIdNullable(roomId).filter {
             it.userEntity == null
         }.map {
@@ -30,10 +27,11 @@ interface ChatParticipantsDao {
                 userEntity = it.userEntity!!)
         }
     }
-
-    @Query("SELECT * FROM ChatParticipantsEntity")
-    suspend fun findAll() : List<ChatParticipantsEntity>
-
-    @Query("SELECT * FROM ChatParticipantsEntity")
-    fun findAllFlow() : Flow<List<ChatParticipantsEntity>>
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun addAll(list: List<ChatParticipantsEntity>)
+    @Query("""Delete 
+        from ChatParticipantsEntity""")                         suspend fun deleteAll()
+    @Query("""Delete
+        From ChatParticipantsEntity
+        Where roomId = :roomId
+    """)                         suspend fun deleteByRoomId(roomId : Int)
 }
