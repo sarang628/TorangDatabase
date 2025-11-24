@@ -12,10 +12,10 @@ import kotlinx.coroutines.flow.Flow
 interface LikeDao {
     @Query("""SELECT * 
         from LikeEntity 
-        where reviewId = (:reviewId)""")                   fun getByReviewIdFlow(reviewId: Int): Flow<LikeEntity>
+        where reviewId = (:reviewId)""")                   fun getByReviewIdFlow(reviewId: Int)        : Flow<LikeEntity>
     @Query("""SELECT * 
                       FROM LikeEntity 
-                      WHERE reviewId = (:reviewId)""")           suspend fun getByReviewId(reviewId: Int): LikeEntity
+                      WHERE reviewId = (:reviewId)""")           suspend fun getByReviewId(reviewId: Int)            : LikeEntity?
     @Insert                              suspend fun add(like: LikeEntity)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
                                          suspend fun addAll(likes: List<LikeEntity>)
@@ -27,5 +27,5 @@ interface LikeDao {
     @Delete                              suspend fun deleteAll(likes: List<LikeEntity>)
     @Query("""SELECT count(*) 
                     FROM LikeEntity 
-                    WHERE reviewId = (:reviewId)""")    suspend fun has(reviewId: Int): Int
+                    WHERE reviewId = (:reviewId)""")    suspend fun has(reviewId: Int)                      : Int
 }
