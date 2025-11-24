@@ -29,7 +29,7 @@ import kotlin.collections.map
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class FeedDaoTest {
+class FeedDaoApITest {
     @get:Rule var hiltRule = HiltAndroidRule(this)
     @Inject lateinit var feedDao: FeedDao
     @Inject lateinit var userDao: UserDao
@@ -63,7 +63,7 @@ class FeedDaoTest {
 
     @Test
     fun getAllFeedWithUserTest() = runTest {
-        val result = feedDao.getAllFeedWithUser()
+        val result = feedDao.getAllFlow()
             .filter { it.isNotEmpty() }
             .first() // 비어있지 않은 데이터가 나올 때까지 기다렸다가 바로 종료
 
@@ -72,7 +72,7 @@ class FeedDaoTest {
 
     @Test
     fun getFeedByPictureIdTest() = runTest {
-        val result = feedDao.getFeedByPictureId(1039).first()
+        val result = feedDao.getByPictureIdFlow(1039).first()
         Log.d(tag, result.toString());
     }
 }

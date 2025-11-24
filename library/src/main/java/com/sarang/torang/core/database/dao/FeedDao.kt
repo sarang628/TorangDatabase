@@ -17,88 +17,56 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FeedDao {
-    @Query(
-        """
-        SELECT FeedEntity.reviewId,
-               FeedEntity.userId,
-               FeedEntity.restaurantId,
-               FeedEntity.userName,
-               FeedEntity.restaurantName,
-               FeedEntity.profilePicUrl,
-               FeedEntity.contents,
-               FeedEntity.rating,
-               FeedEntity.likeAmount,
-               FeedEntity.commentAmount,
-               FeedEntity.createDate, 
-               UserEntity.profilePicUrl,
-               UserEntity.userName, 
-               UserEntity.userId, 
-               RestaurantEntity.restaurantName, 
-               RestaurantEntity.restaurantId
+    @Query(""" SELECT * 
         FROM FeedEntity 
-        JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
-        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurantId
-        WHERE FeedEntity.userId = (:userId)
+        WHERE reviewId = (:reviewId) 
         ORDER BY FeedEntity.createDate DESC
-        """
-    )
-    fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>>
-
-    @Query(
-        """
+        """)  suspend  fun get(reviewId: Int)                           : ReviewAndImageEntity?
+    @Query("""
         SELECT *
         FROM FeedEntity
-        ORDER BY FeedEntity.createDate DESC"""
-    )
-    fun getAllFeedWithUser(): Flow<List<ReviewAndImageEntity>>
-
-    @Query(
-        """
+        ORDER BY FeedEntity.createDate DESC
+        """)           fun getAllFlow()                                 : Flow<List<ReviewAndImageEntity>>
+    @Query("""
+        SELECT *
+        FROM FeedEntity
+        WHERE FeedEntity.userId = (:userId)
+        ORDER BY FeedEntity.createDate DESC
+        """)           fun getAllByUserIdFlow(userId: Int)              : Flow<List<ReviewAndImageEntity>>
+    @Query("""
+        SELECT * 
+        FROM FeedEntity 
+        WHERE restaurantId = (:restaurantId) 
+        ORDER BY FeedEntity.createDate DESC
+        """)           fun getAllByRestaurantIdFlow(restaurantId: Int)  : Flow<List<ReviewAndImageEntity>>
+    @Query(""" SELECT * 
+        FROM FeedEntity 
+        WHERE reviewId = (:reviewId) 
+        ORDER BY FeedEntity.createDate DESC """)           fun getByReviewIdFlow(reviewId: Int)             : Flow<ReviewAndImageEntity>
+    @Query("""SELECT * 
+              FROM FeedEntity 
+              WHERE reviewId = (SELECT reviewId 
+                                FROM ReviewImageEntity 
+                                WHERE pictureId = :pictureId)""")           fun getByPictureIdFlow(pictureId: Int)           : Flow<ReviewAndImageEntity?>
+    @Query(""" DELETE 
+            FROM FeedEntity""")    suspend  fun deleteAll()
+    @Query("""
         DELETE 
         FROM FeedEntity 
-        where reviewId = (:reviewId)"""
-    )
-    suspend fun deleteFeed(reviewId: Int): Int
-
-    @Query("DELETE FROM FeedEntity")
-    suspend fun deleteAll()
-
-    @Query("select * from FeedEntity where reviewId = (:reviewId) order by FeedEntity.createDate desc")
-    fun getFeedFlow(reviewId: Int): Flow<ReviewAndImageEntity>
-
-    @Query("select * from FeedEntity where reviewId = (:reviewId) order by FeedEntity.createDate desc")
-    suspend fun getFeed(reviewId: Int): ReviewAndImageEntity?
-
-    @Query("DELETE FROM ReviewImageEntity where reviewId = (:reviewId)")
-    suspend fun deletePicturesByReviewId(reviewId: Int)
-
-    @Query(
-        """
-        select * 
-        from ReviewImageEntity 
-        where reviewId = (:reviewId)"""
-    )
-    fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>>
-
-
-    /*incoude like*/
-    @Query(
-        """
-            Select * 
-            From FeedEntity
-        """
-    )
-    fun feedIncludeLike() {
-
-    }
-
-    @Query(
-        """
-        select * 
-        from FeedEntity 
-        where restaurantId = (:restaurantId) order by FeedEntity.createDate desc"""
-    )
-    fun getFeedByRestaurantId(restaurantId: Int): Flow<List<ReviewAndImageEntity>>
+        WHERE reviewId = (:reviewId)
+        """)    suspend  fun deleteByReviewId(reviewId: Int)              : Int
+    @Query("""update 
+        FeedEntity 
+        set likeAmount = likeAmount + 1 
+        where reviewId = (:reviewId)""")    suspend  fun addLikeCount(reviewId: Int)
+    @Query("""update 
+                      FeedEntity 
+                      set likeAmount = likeAmount - 1 
+                      where reviewId = (:reviewId)""")    suspend  fun subTractLikeCount(reviewId: Int)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Transaction                suspend fun addAll(feeds: List<FeedEntity>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Transaction                suspend fun add(feed: FeedEntity)
 
     @Transaction
     suspend fun deleteAllAndInsertAll(
@@ -112,7 +80,7 @@ interface FeedDao {
         favorites: List<FavoriteEntity>,
         deleteLikes: List<LikeEntity>,
     ): Int {
-        likeDao.deleteLikes(deleteLikes)
+        likeDao.deleteAll(deleteLikes)
         feedDao.deleteAll()
         insertUserAndPictureAndLikeAndRestaurantAndFeed(
             users,
@@ -149,24 +117,9 @@ interface FeedDao {
     ) {
         pictureDao.insertAll(reviewImages)
         userDao.addAll(userList)
-        likeDao.insertLikes(likeList)
+        likeDao.addAll(likeList)
         favoriteDao.insertAll(favorites)
-        //마지막에 안넣어주면 앱 강제종료
-        insertAll(feedList)
+        //마지막에 안 넣어주면 앱 강제종료
+        addAll(feedList)
     }
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    @Transaction
-    suspend fun insertAll(plantList: List<FeedEntity>)
-
-    @Query("update FeedEntity set likeAmount = likeAmount + 1 where reviewId = (:reviewId)")
-    suspend fun addLikeCount(reviewId: Int)
-
-    @Query("update FeedEntity set likeAmount = likeAmount - 1 where reviewId = (:reviewId)")
-    suspend fun subTractLikeCount(reviewId: Int)
-
-    @Query("""select * 
-              from FeedEntity 
-              Where reviewId = (select reviewId from ReviewImageEntity where pictureId = :pictureId)""")
-    fun getFeedByPictureId(pictureId: Int): Flow<ReviewAndImageEntity?>
 }
