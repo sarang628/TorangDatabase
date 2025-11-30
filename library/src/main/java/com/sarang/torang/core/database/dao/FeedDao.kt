@@ -17,7 +17,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FeedDao {
-    @Query(""" SELECT * 
+    @Query(""" 
+        SELECT * 
         FROM FeedEntity 
         WHERE reviewId = (:reviewId) 
         ORDER BY FeedEntity.createDate DESC

@@ -39,29 +39,38 @@ class FeedDaoLocalTest {
     fun addTest() = runTest {
         feedDao.add(
             FeedEntity(
-                reviewId = 1,
-                userId = 1,
-                restaurantId = 1,
-                userName = "userName",
-                restaurantName = "restaurantName",
-                profilePicUrl = "profilePicUrl",
-                contents = "contents",
-                rating = 0f,
-                likeAmount = 0,
-                commentAmount = 0,
-                createDate = ""
+                reviewId        = 1,
+                userId          = 1,
+                restaurantId    = 1,
+                userName        = "userName",
+                restaurantName  = "restaurantName",
+                profilePicUrl   = "profilePicUrl",
+                contents        = "contents",
+                rating          = 0f,
+                likeAmount      = 0,
+                commentAmount   = 0,
+                createDate      = ""
             )
         )
-        assertEquals("contents",feedDao.get(1)?.review?.contents)
+    }
+
+    @Test
+    fun getTest() = runTest {
+        addTest()
+
+        assertEquals("contents", feedDao.get(1)?.review?.contents)
+        assertEquals(true, feedDao.get(1)?.images?.isEmpty())
+        assertEquals(null, feedDao.get(1)?.like)
+        assertEquals(null, feedDao.get(1)?.favorite)
+    }
+
+    @Test
+    fun deleteTest() = runTest {
+        addTest()
 
         feedDao.deleteByReviewId(1)
 
         assertEquals(null,feedDao.get(1))
-    }
-
-    @Test
-    fun test(){
-
     }
 
     @Test
@@ -94,5 +103,15 @@ class FeedDaoLocalTest {
 
         assertEquals(1 , feedDao.getAllFlow().first()[0].like?.likeId)
 
+    }
+
+    @Test
+    fun getAllFlowTest() = runTest {
+        assertEquals(true, feedDao.getAllFlow().first().isEmpty())
+    }
+
+    @Test
+    fun getAllByUserIdFlow() = runTest {
+        assertEquals(true, feedDao.getAllByUserIdFlow(1).first().isEmpty())
     }
 }

@@ -62,7 +62,7 @@ class LikeDaoTest {
             )
         )
 
-        assertEquals(1 ,likeDao.getByReviewId(1).userId)
+        assertEquals(1 ,likeDao.getByReviewId(1)?.userId)
 
         likeDao.delete(1)
 
