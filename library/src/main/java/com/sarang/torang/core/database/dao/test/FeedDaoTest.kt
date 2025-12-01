@@ -19,7 +19,7 @@ fun FavoriteDaoTest(feedDao: FavoriteDao) {
     Column {
         Button(onClick = {
             coroutineScope.launch {
-                feedDao.getMyFavorite(1).collect {
+                feedDao.getMyFavorite().collect {
                     text = "" + it
                 }
             }

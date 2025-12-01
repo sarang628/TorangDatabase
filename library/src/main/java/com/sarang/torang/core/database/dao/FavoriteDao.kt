@@ -32,10 +32,10 @@ interface FavoriteDao {
         FROM FeedEntity 
         JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
         LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurantId
-        WHERE reviewId IN (Select reviewId from FavoriteEntity where userId = (:userId) )
+        WHERE reviewId IN (SELECT reviewId FROM FavoriteEntity )
         ORDER BY createDate DESC
         """)
-    fun getMyFavorite(userId: Int): Flow<List<ReviewAndImageEntity>>
+    fun getMyFavorite(): Flow<List<ReviewAndImageEntity>>
 
     @Query("""
         DELETE FROM FavoriteEntity
