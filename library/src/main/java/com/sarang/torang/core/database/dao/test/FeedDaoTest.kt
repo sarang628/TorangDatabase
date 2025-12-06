@@ -13,20 +13,15 @@ import com.sarang.torang.core.database.dao.FavoriteDao
 import kotlinx.coroutines.launch
 
 @Composable
-fun FavoriteDaoTest(feedDao: FavoriteDao) {
+fun FavoriteDaoTest(favoriteDao: FavoriteDao) {
     var text by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
     Column {
         Button(onClick = {
-            coroutineScope.launch {
-                feedDao.getMyFavorite().collect {
-                    text = "" + it
-                }
-            }
         }) {
 
         }
-        Button(onClick = { feedDao.getFavorite(1) }) {
+        Button(onClick = {}) {
 
         }
         Text(text = text)

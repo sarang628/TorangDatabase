@@ -63,7 +63,7 @@ class FeedDaoApITest {
 
     @Test
     fun getAllFeedWithUserTest() = runTest {
-        val result = feedDao.getAllFlow()
+        val result = feedDao.findAllFlow()
             .filter { it.isNotEmpty() }
             .first() // 비어있지 않은 데이터가 나올 때까지 기다렸다가 바로 종료
 
@@ -72,7 +72,7 @@ class FeedDaoApITest {
 
     @Test
     fun getFeedByPictureIdTest() = runTest {
-        val result = feedDao.getByPictureIdFlow(1039).first()
+        val result = feedDao.findByPictureIdFlow(1039).first()
         Log.d(tag, result.toString());
     }
 }

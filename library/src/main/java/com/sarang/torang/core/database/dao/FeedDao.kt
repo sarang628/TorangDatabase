@@ -22,33 +22,55 @@ interface FeedDao {
         FROM FeedEntity 
         WHERE reviewId = (:reviewId) 
         ORDER BY FeedEntity.createDate DESC
-        """)  suspend  fun get(reviewId: Int)                           : ReviewAndImageEntity?
+        """)  suspend  fun find(reviewId: Int)                           : ReviewAndImageEntity?
     @Query("""
         SELECT *
         FROM FeedEntity
         ORDER BY FeedEntity.createDate DESC
-        """)           fun getAllFlow()                                 : Flow<List<ReviewAndImageEntity>>
+        """)           fun findAllFlow()                                 : Flow<List<ReviewAndImageEntity>>
     @Query("""
         SELECT *
         FROM FeedEntity
         WHERE FeedEntity.userId = (:userId)
         ORDER BY FeedEntity.createDate DESC
-        """)           fun getAllByUserIdFlow(userId: Int)              : Flow<List<ReviewAndImageEntity>>
+        """)           fun findAllByUserIdFlow(userId: Int)              : Flow<List<ReviewAndImageEntity>>
     @Query("""
         SELECT * 
         FROM FeedEntity 
         WHERE restaurantId = (:restaurantId) 
         ORDER BY FeedEntity.createDate DESC
-        """)           fun getAllByRestaurantIdFlow(restaurantId: Int)  : Flow<List<ReviewAndImageEntity>>
+        """)           fun findAllByRestaurantIdFlow(restaurantId: Int)  : Flow<List<ReviewAndImageEntity>>
     @Query(""" SELECT * 
         FROM FeedEntity 
         WHERE reviewId = (:reviewId) 
-        ORDER BY FeedEntity.createDate DESC """)           fun getByReviewIdFlow(reviewId: Int)             : Flow<ReviewAndImageEntity>
+        ORDER BY FeedEntity.createDate DESC """)           fun findByReviewIdFlow(reviewId: Int)             : Flow<ReviewAndImageEntity>
     @Query("""SELECT * 
               FROM FeedEntity 
               WHERE reviewId = (SELECT reviewId 
                                 FROM ReviewImageEntity 
-                                WHERE pictureId = :pictureId)""")           fun getByPictureIdFlow(pictureId: Int)           : Flow<ReviewAndImageEntity?>
+                                WHERE pictureId = :pictureId)""")           fun findByPictureIdFlow(pictureId: Int)           : Flow<ReviewAndImageEntity?>
+    @Query("""
+        SELECT 
+               FeedEntity.*, 
+               UserEntity.profilePicUrl, 
+               UserEntity.userId
+        FROM FavoriteEntity
+        LEFT OUTER JOIN FeedEntity ON FeedEntity.reviewId = FavoriteEntity.reviewId
+        LEFT OUTER JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
+        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurantId
+        ORDER BY FavoriteEntity.createDate DESC
+        """)             fun findAllByFavoriteFlow()                       : Flow<List<ReviewAndImageEntity>>
+    @Query("""
+        SELECT 
+               FeedEntity.*, 
+               UserEntity.profilePicUrl, 
+               UserEntity.userId
+        FROM LikeEntity
+        LEFT OUTER JOIN FeedEntity ON FeedEntity.reviewId = LikeEntity.reviewId
+        LEFT OUTER JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
+        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurantId
+        ORDER BY LikeEntity.createDate DESC
+        """)             fun findAllByLikeFlow()                           : Flow<List<ReviewAndImageEntity>>
     @Query(""" DELETE 
             FROM FeedEntity""")    suspend  fun deleteAll()
     @Query("""

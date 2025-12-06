@@ -1,7 +1,6 @@
 package com.sarang.torang.core.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -11,38 +10,31 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteDao {
-
-    @Query("select count(*) from FavoriteEntity where reviewId = (:reviewId)")
-    suspend fun hasFavorite(reviewId: Int): Int
-
-    @Delete
-    suspend fun deleteFavorite(favorite: FavoriteEntity)
-
-    @Query("select * from FavoriteEntity where reviewId = (:reviewId)")
-    suspend fun getFavorite1(reviewId: Int): FavoriteEntity
-
-    @Insert
-    suspend fun insertFavorite(favorite: FavoriteEntity)
-
-    @Query("select * from FavoriteEntity where reviewId = (:reviewId)")
-    fun getFavorite(reviewId: Int): Flow<FavoriteEntity>
-
     @Query("""
-        SELECT FeedEntity.*, UserEntity.profilePicUrl, UserEntity.userId
-        FROM FeedEntity 
-        JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
-        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurantId
-        WHERE reviewId IN (SELECT reviewId FROM FavoriteEntity )
-        ORDER BY createDate DESC
-        """)
-    fun getMyFavorite(): Flow<List<ReviewAndImageEntity>>
-
+        SELECT * 
+        FROM FavoriteEntity 
+        WHERE reviewId = (:reviewId)
+        """)                suspend fun findByReviewId(reviewId: Int): FavoriteEntity
     @Query("""
-        DELETE FROM FavoriteEntity
-    """
-    )
-    suspend fun deleteAll()
-
+        SELECT * 
+        FROM FavoriteEntity 
+        WHERE reviewId = (:reviewId)
+        """)                        fun findByReviewIdFlow(reviewId: Int): Flow<FavoriteEntity>
+    @Query("""
+        SELECT count(*) 
+        FROM FavoriteEntity 
+        WHERE reviewId = (:reviewId)
+        """)         suspend fun hasFavorite(reviewId: Int): Boolean
+    @Query("""
+        DELETE
+        FROM FAVORITEENTITY
+        WHERE favoriteId = :favoriteId
+    """)                  suspend fun delete(favoriteId: Int)
+    @Insert                                   suspend fun add(favorite: FavoriteEntity)
+    @Query("""
+        DELETE 
+        FROM FavoriteEntity
+    """)                  suspend fun deleteAll()
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(feedList: List<FavoriteEntity>)
+                                                      fun insertAll(feedList: List<FavoriteEntity>)
 }

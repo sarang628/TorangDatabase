@@ -58,10 +58,10 @@ class FeedDaoLocalTest {
     fun getTest() = runTest {
         addTest()
 
-        assertEquals("contents", feedDao.get(1)?.review?.contents)
-        assertEquals(true, feedDao.get(1)?.images?.isEmpty())
-        assertEquals(null, feedDao.get(1)?.like)
-        assertEquals(null, feedDao.get(1)?.favorite)
+        assertEquals("contents", feedDao.find(1)?.review?.contents)
+        assertEquals(true, feedDao.find(1)?.images?.isEmpty())
+        assertEquals(null, feedDao.find(1)?.like)
+        assertEquals(null, feedDao.find(1)?.favorite)
     }
 
     @Test
@@ -70,7 +70,7 @@ class FeedDaoLocalTest {
 
         feedDao.deleteByReviewId(1)
 
-        assertEquals(null,feedDao.get(1))
+        assertEquals(null,feedDao.find(1))
     }
 
     @Test
@@ -92,7 +92,7 @@ class FeedDaoLocalTest {
             )
         )
 
-        assertEquals(false , feedDao.getAllFlow().first().isEmpty())
+        assertEquals(false , feedDao.findAllFlow().first().isEmpty())
 
         likeDao.add(LikeEntity(
             likeId = 1,
@@ -101,17 +101,17 @@ class FeedDaoLocalTest {
             createDate = ""
         ))
 
-        assertEquals(1 , feedDao.getAllFlow().first()[0].like?.likeId)
+        assertEquals(1 , feedDao.findAllFlow().first()[0].like?.likeId)
 
     }
 
     @Test
     fun getAllFlowTest() = runTest {
-        assertEquals(true, feedDao.getAllFlow().first().isEmpty())
+        assertEquals(true, feedDao.findAllFlow().first().isEmpty())
     }
 
     @Test
     fun getAllByUserIdFlow() = runTest {
-        assertEquals(true, feedDao.getAllByUserIdFlow(1).first().isEmpty())
+        assertEquals(true, feedDao.findAllByUserIdFlow(1).first().isEmpty())
     }
 }
