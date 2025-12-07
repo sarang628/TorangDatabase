@@ -9,6 +9,5 @@ data class FavoriteEntity(
     @PrimaryKey
     var favoriteId: Int,
     var reviewId: Int,
-    var userId: Int,
     var createDate: String
 )
