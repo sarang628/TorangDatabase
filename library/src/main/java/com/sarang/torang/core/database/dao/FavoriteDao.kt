@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sarang.torang.core.database.model.favorite.FavoriteEntity
-import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -36,5 +35,5 @@ interface FavoriteDao {
         FROM FavoriteEntity
     """)                  suspend fun deleteAll()
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-                                                      fun insertAll(feedList: List<FavoriteEntity>)
+                                                      fun addAll(feedList: List<FavoriteEntity>)
 }

@@ -68,7 +68,7 @@ interface MyFeedDao {
         pictureDao.insertAll(reviewImages)
         userDao.addAll(userList)
         likeDao.addAll(likeList)
-        favoriteDao.insertAll(favorites)
+        favoriteDao.addAll(favorites)
         //마지막에 안넣어주면 앱 강제종료
         insertAll(feedList)
     }
