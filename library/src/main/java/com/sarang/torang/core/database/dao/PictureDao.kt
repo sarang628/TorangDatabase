@@ -27,6 +27,10 @@ interface PictureDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Transaction
                                 suspend fun addAll(reviewImages: List<ReviewImageEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Transaction
+                                suspend fun add(reviewImage: ReviewImageEntity)
     @Query("""DELETE 
                       FROM ReviewImageEntity 
                       WHERE reviewId = :reviewId""")    suspend fun delete(reviewId: Int)
