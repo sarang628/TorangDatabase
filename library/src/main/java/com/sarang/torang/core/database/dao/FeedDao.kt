@@ -138,7 +138,7 @@ interface FeedDao {
         favoriteDao: FavoriteDao,
         favorites: List<FavoriteEntity>,
     ) {
-        pictureDao.insertAll(reviewImages)
+        pictureDao.addAll(reviewImages)
         userDao.addAll(userList)
         likeDao.addAll(likeList)
         favoriteDao.addAll(favorites)

@@ -6,30 +6,13 @@ import androidx.room.PrimaryKey
 @Entity
 data class ReviewImageEntity(
     @PrimaryKey val pictureId: Int,
-    val restaurantId: Int,
-    val userId: Int,
-    val reviewId: Int,
-    val pictureUrl: String,
-    val createDate: String,
-    val menuId: Int,
-    val menu: Int,
-    val width: Int,
-    val height: Int,
-) {
-    companion object {
-        fun uploadParam(path: String): ReviewImageEntity {
-            return ReviewImageEntity(
-                pictureId = -1,
-                restaurantId = -1,
-                reviewId = -1,
-                pictureUrl = path,
-                createDate = "",
-                menuId = -1,
-                menu = 0,
-                userId = -1,
-                width = 0,
-                height = 0
-            )
-        }
-    }
-}
+    val restaurantId    : Int?      = null,
+    val userId          : Int?      = null,
+    val reviewId        : Int?      = null,
+    val pictureUrl      : String?   = null,
+    val createDate      : String?   = null,
+    val menuId          : Int?      = null,
+    val menu            : Int?      = null,
+    val width           : Int?      = null,
+    val height          : Int?      = null,
+)
