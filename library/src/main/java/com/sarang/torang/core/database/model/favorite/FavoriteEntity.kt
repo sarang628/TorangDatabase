@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(indices = [Index(value = ["favoriteId"], unique = true)])
 data class FavoriteEntity(
     @PrimaryKey
-    var favoriteId: Int,
-    var reviewId: Int,
-    var createDate: String
+    var favoriteId  : Int,
+    var reviewId    : Int?,
+    var createDate  : String?
 )

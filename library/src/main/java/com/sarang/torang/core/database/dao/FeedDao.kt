@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.sarang.torang.core.database.model.favorite.FavoriteAndImageEntity
 import com.sarang.torang.core.database.model.favorite.FavoriteEntity
 
 import com.sarang.torang.core.database.model.feed.FeedEntity
@@ -50,16 +51,26 @@ interface FeedDao {
                                 FROM ReviewImageEntity 
                                 WHERE pictureId = :pictureId)""")           fun findByPictureIdFlow(pictureId: Int)           : Flow<ReviewAndImageEntity?>
     @Query("""
-        SELECT 
-               FeedEntity.*, 
-               UserEntity.profilePicUrl, 
-               UserEntity.userId
-        FROM FavoriteEntity
-        LEFT OUTER JOIN FeedEntity ON FeedEntity.reviewId = FavoriteEntity.reviewId
-        LEFT OUTER JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
-        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurantId
-        ORDER BY FavoriteEntity.createDate DESC
-        """)             fun findAllByFavoriteFlow()                       : Flow<List<ReviewAndImageEntity>>
+        SELECT f.favoriteId,
+               f.reviewId,
+               f.createDate,
+               ri.pictureId,
+               ri.pictureUrl,
+               ri.width,
+               ri.height
+        FROM FavoriteEntity AS f
+        LEFT JOIN ReviewImageEntity AS ri
+               ON ri.pictureId = (
+                   SELECT pictureId
+                   FROM ReviewImageEntity
+                   WHERE reviewId = f.reviewId
+                   ORDER BY 
+                     createDate IS NULL ASC,  -- NULL은 TRUE(1) → 마지막
+                     createDate ASC           -- NULL이 아닌 경우 가장 오래된 것
+                   LIMIT 1
+               )
+        ORDER BY f.createDate DESC;
+        """)             fun findAllByFavoriteFlow()                       : Flow<List<FavoriteAndImageEntity>>
     @Query("""
         SELECT 
                FeedEntity.*, 

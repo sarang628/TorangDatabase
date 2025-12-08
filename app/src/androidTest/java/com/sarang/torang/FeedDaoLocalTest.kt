@@ -1,13 +1,17 @@
 package com.sarang.torang
 
+import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.gson.GsonBuilder
 import com.sarang.torang.api.feed.ApiFeedV1
 import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.FeedDao
 import com.sarang.torang.core.database.dao.LikeDao
 import com.sarang.torang.core.database.dao.PictureDao
 import com.sarang.torang.core.database.dao.UserDao
+import com.sarang.torang.core.database.model.favorite.FavoriteEntity
 import com.sarang.torang.core.database.model.feed.FeedEntity
+import com.sarang.torang.core.database.model.image.ReviewImageEntity
 import com.sarang.torang.core.database.model.like.LikeEntity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -30,6 +34,7 @@ class FeedDaoLocalTest {
     @Inject lateinit var pictureDao: PictureDao
     @Inject lateinit var favoriteDao: FavoriteDao
     @Inject lateinit var apiFeedV1: ApiFeedV1
+
     @Before fun setUp() { hiltRule.inject() }
 
     private val tag = "__FeedDaoLocalTest"
@@ -113,5 +118,36 @@ class FeedDaoLocalTest {
     @Test
     fun getAllByUserIdFlow() = runTest {
         assertEquals(true, feedDao.findAllByUserIdFlow(1).first().isEmpty())
+    }
+
+    @Test
+    fun findAllByFavoriteFlow() = runTest {
+        favoriteDao.add(FavoriteEntity(
+            favoriteId = 1,
+            reviewId = 0,
+            createDate = ""
+        ))
+
+        pictureDao.add(ReviewImageEntity(
+            pictureId = 0,
+            pictureUrl = "pictureUrl",
+            reviewId = 0,
+            width = 1,
+            height = 2
+        ))
+
+        pictureDao.add(ReviewImageEntity(
+            pictureId = 1,
+            pictureUrl = "pictureUrl",
+            reviewId = 0,
+            width = 1,
+            height = 2
+        ))
+
+        val first = feedDao.findAllByFavoriteFlow().first()
+
+        Log.d("__findAllByFavoriteFlow", GsonBuilder().setPrettyPrinting().create().toJson(first))
+
+        assertEquals(true, first.isNotEmpty())
     }
 }
