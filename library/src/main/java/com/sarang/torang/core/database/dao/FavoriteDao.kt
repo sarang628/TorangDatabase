@@ -35,5 +35,5 @@ interface FavoriteDao {
         FROM FavoriteEntity
     """)                  suspend fun deleteAll()
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-                                                      fun addAll(feedList: List<FavoriteEntity>)
+                                              suspend fun addAll(feedList: List<FavoriteEntity>)
 }
