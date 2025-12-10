@@ -11,6 +11,7 @@ import com.sarang.torang.core.database.model.favorite.FavoriteEntity
 import com.sarang.torang.core.database.model.feed.FeedEntity
 import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import com.sarang.torang.core.database.model.image.ReviewImageEntity;
+import com.sarang.torang.core.database.model.like.LikeAndImageEntity
 import com.sarang.torang.core.database.model.like.LikeEntity
 import com.sarang.torang.core.database.model.restaurant.RestaurantEntity
 import com.sarang.torang.core.database.model.user.UserEntity
@@ -91,7 +92,7 @@ interface FeedDao {
                    LIMIT 1
                )
         ORDER BY l.createDate DESC;
-        """)             fun findAllByLikeFlow()                           : Flow<List<ReviewAndImageEntity>>
+        """)             fun findAllByLikeFlow()                           : Flow<List<LikeAndImageEntity>>
     @Query(""" DELETE 
             FROM FeedEntity""")    suspend  fun deleteAll()
     @Query("""
