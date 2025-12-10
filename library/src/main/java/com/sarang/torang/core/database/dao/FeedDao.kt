@@ -72,15 +72,25 @@ interface FeedDao {
         ORDER BY f.createDate DESC;
         """)             fun findAllByFavoriteFlow()                       : Flow<List<FavoriteAndImageEntity>>
     @Query("""
-        SELECT 
-               FeedEntity.*, 
-               UserEntity.profilePicUrl, 
-               UserEntity.userId
-        FROM LikeEntity
-        LEFT OUTER JOIN FeedEntity ON FeedEntity.reviewId = LikeEntity.reviewId
-        LEFT OUTER JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
-        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurantId
-        ORDER BY LikeEntity.createDate DESC
+        SELECT l.likeId,
+               l.reviewId,
+               l.createDate,
+               ri.pictureId,
+               ri.pictureUrl,
+               ri.width,
+               ri.height
+        FROM LikeEntity AS l
+        LEFT JOIN ReviewImageEntity AS ri
+               ON ri.pictureId = (
+                   SELECT pictureId
+                   FROM ReviewImageEntity
+                   WHERE reviewId = l.reviewId
+                   ORDER BY 
+                     createDate IS NULL ASC,  -- NULL은 TRUE(1) → 마지막
+                     createDate ASC           -- NULL이 아닌 경우 가장 오래된 것
+                   LIMIT 1
+               )
+        ORDER BY l.createDate DESC;
         """)             fun findAllByLikeFlow()                           : Flow<List<ReviewAndImageEntity>>
     @Query(""" DELETE 
             FROM FeedEntity""")    suspend  fun deleteAll()

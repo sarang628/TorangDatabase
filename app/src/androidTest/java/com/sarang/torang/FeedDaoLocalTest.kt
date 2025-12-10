@@ -102,7 +102,6 @@ class FeedDaoLocalTest {
         likeDao.add(LikeEntity(
             likeId = 1,
             reviewId = 1,
-            userId = 1,
             createDate = ""
         ))
 

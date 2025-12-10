@@ -6,8 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class LikeEntity(
     @PrimaryKey
-    var likeId: Int,
-    var reviewId: Int,
-    var userId: Int,
-    var createDate: String
+    var likeId      : Int,
+    var reviewId    : Int,
+    var createDate  : String?
 )

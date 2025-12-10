@@ -35,12 +35,11 @@ class LikeDaoTest {
             LikeEntity(
                 likeId = 1,
                 reviewId = 1,
-                userId = 1,
                 createDate = ""
             )
         )
 
-        assertEquals(1 ,likeDao.findByReviewId(1)?.userId)
+        assertEquals(1 ,likeDao.findByReviewId(1)?.reviewId)
 
         likeDao.delete(1)
 
