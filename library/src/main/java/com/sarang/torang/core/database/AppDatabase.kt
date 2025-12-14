@@ -22,6 +22,7 @@ import com.sarang.torang.core.database.dao.PictureDao
 import com.sarang.torang.core.database.dao.RestaurantDao
 import com.sarang.torang.core.database.dao.RestaurantImageDao
 import com.sarang.torang.core.database.dao.ReviewDao
+import com.sarang.torang.core.database.dao.ReviewImageDao
 import com.sarang.torang.core.database.dao.SearchDao
 import com.sarang.torang.core.database.dao.SearchedRestaurantDao
 import com.sarang.torang.core.database.dao.UserDao
@@ -101,6 +102,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun chatImageDao()                 : ChatImageDao
     abstract fun chatParticipantsDao()          : ChatParticipantsDao
     abstract fun mainFeedDao()                  : MainFeedDao
+    abstract fun reviewImageDao()               : ReviewImageDao
+
 
     companion object {
         // For Singleton instantiation
