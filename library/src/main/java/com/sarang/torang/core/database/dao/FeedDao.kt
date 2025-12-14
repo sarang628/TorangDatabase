@@ -24,33 +24,33 @@ interface FeedDao {
         FROM FeedEntity 
         WHERE reviewId = (:reviewId) 
         ORDER BY FeedEntity.createDate DESC
-        """)  suspend  fun find(reviewId: Int)                           : ReviewAndImageEntity?
+        """)                  suspend  fun find(reviewId: Int)                           : ReviewAndImageEntity?
     @Query("""
         SELECT *
         FROM FeedEntity
         ORDER BY FeedEntity.createDate DESC
-        """)           fun findAllFlow()                                 : Flow<List<ReviewAndImageEntity>>
+        """)                           fun findAllFlow()                                 : Flow<List<ReviewAndImageEntity>>
     @Query("""
         SELECT *
         FROM FeedEntity
         WHERE FeedEntity.userId = (:userId)
         ORDER BY FeedEntity.createDate DESC
-        """)           fun findAllByUserIdFlow(userId: Int)              : Flow<List<ReviewAndImageEntity>>
+        """)                           fun findAllByUserIdFlow(userId: Int)              : Flow<List<ReviewAndImageEntity>>
     @Query("""
         SELECT * 
         FROM FeedEntity 
         WHERE restaurantId = (:restaurantId) 
         ORDER BY FeedEntity.createDate DESC
-        """)           fun findAllByRestaurantIdFlow(restaurantId: Int)  : Flow<List<ReviewAndImageEntity>>
+        """)                           fun findAllByRestaurantIdFlow(restaurantId: Int)  : Flow<List<ReviewAndImageEntity>>
     @Query(""" SELECT * 
         FROM FeedEntity 
         WHERE reviewId = (:reviewId) 
-        ORDER BY FeedEntity.createDate DESC """)           fun findByReviewIdFlow(reviewId: Int)             : Flow<ReviewAndImageEntity>
+        ORDER BY FeedEntity.createDate DESC """)                           fun findByReviewIdFlow(reviewId: Int)             : Flow<ReviewAndImageEntity>
     @Query("""SELECT * 
               FROM FeedEntity 
               WHERE reviewId = (SELECT reviewId 
                                 FROM ReviewImageEntity 
-                                WHERE pictureId = :pictureId)""")           fun findByPictureIdFlow(pictureId: Int)           : Flow<ReviewAndImageEntity?>
+                                WHERE pictureId = :pictureId)""")                           fun findByPictureIdFlow(pictureId: Int)           : Flow<ReviewAndImageEntity?>
     @Query("""
         SELECT f.favoriteId,
                f.reviewId,
@@ -71,7 +71,7 @@ interface FeedDao {
                    LIMIT 1
                )
         ORDER BY f.createDate DESC;
-        """)             fun findAllByFavoriteFlow()                       : Flow<List<FavoriteAndImageEntity>>
+        """)               fun findAllByFavoriteFlow()                       : Flow<List<FavoriteAndImageEntity>>
     @Query("""
         SELECT l.likeId,
                l.reviewId,
@@ -92,39 +92,37 @@ interface FeedDao {
                    LIMIT 1
                )
         ORDER BY l.createDate DESC;
-        """)             fun findAllByLikeFlow()                           : Flow<List<LikeAndImageEntity>>
+        """)                   fun findAllByLikeFlow()                           : Flow<List<LikeAndImageEntity>>
     @Query(""" DELETE 
-            FROM FeedEntity""")    suspend  fun deleteAll()
+            FROM FeedEntity""")                    suspend  fun deleteAll()
     @Query("""
         DELETE 
         FROM FeedEntity 
         WHERE reviewId = (:reviewId)
-        """)    suspend  fun deleteByReviewId(reviewId: Int)              : Int
+        """)                    suspend  fun deleteByReviewId(reviewId: Int)              : Int
     @Query("""update 
         FeedEntity 
         set likeAmount = likeAmount + 1 
-        where reviewId = (:reviewId)""")    suspend  fun addLikeCount(reviewId: Int)
+        where reviewId = (:reviewId)""")                    suspend  fun addLikeCount(reviewId: Int)
     @Query("""update 
                       FeedEntity 
                       set likeAmount = likeAmount - 1 
-                      where reviewId = (:reviewId)""")    suspend  fun subTractLikeCount(reviewId: Int)
+                      where reviewId = (:reviewId)""")                    suspend  fun subTractLikeCount(reviewId: Int)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    @Transaction                suspend fun addAll(feeds: List<FeedEntity>)
+    @Transaction                                suspend fun addAll(feeds: List<FeedEntity>)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    @Transaction                suspend fun add(feed: FeedEntity)
+    @Transaction                                suspend fun add(feed: FeedEntity)
 
     @Transaction
-    suspend fun deleteAllAndInsertAll(
-        likeDao: LikeDao,
-        feedDao: FeedDao,
-        users: List<UserEntity>,
-        reviewImages: List<ReviewImageEntity>,
-        likes: List<LikeEntity>,
-        restaurants: List<RestaurantEntity>,
-        feedData: List<FeedEntity>,
-        favorites: List<FavoriteEntity>,
-        deleteLikes: List<LikeEntity>,
-    ): Int {
+    suspend fun deleteAllAndInsertAll(likeDao: LikeDao,
+                                      feedDao: FeedDao,
+                                      users: List<UserEntity>,
+                                      reviewImages: List<ReviewImageEntity>,
+                                      likes: List<LikeEntity>,
+                                      restaurants: List<RestaurantEntity>,
+                                      feedData: List<FeedEntity>,
+                                      favorites: List<FavoriteEntity>,
+                                      deleteLikes: List<LikeEntity>, ): Int {
         likeDao.deleteAll(deleteLikes)
         feedDao.deleteAll()
         insertUserAndPictureAndLikeAndRestaurantAndFeed(

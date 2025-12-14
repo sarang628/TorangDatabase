@@ -57,8 +57,6 @@ class FeedDaoApITest {
 
     @Before
     fun before() = runTest{
-        val feedList = apiFeedV1.findAll("")
-        insertFeed(feedList)
     }
 
     @Test
