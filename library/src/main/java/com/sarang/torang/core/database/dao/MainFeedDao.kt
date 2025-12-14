@@ -13,7 +13,8 @@ interface MainFeedDao {
         SELECT *
         FROM FeedEntity
         WHERE reviewId in (SELECT   reviewId 
-                           FROM     MainFeedEntity)
+                           FROM     MainFeedEntity
+                           ORDER BY `order`)
     """)          fun findAllFlow() : Flow<List<ReviewAndImageEntity>>
     @Insert                     suspend fun addAll(list : List<MainFeedEntity>)
     @Insert                     suspend fun all(entity : MainFeedEntity)
