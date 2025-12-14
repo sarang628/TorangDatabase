@@ -76,14 +76,11 @@ interface MyFeedDao {
                      ORDER BY MyFeedEntity.createDate DESC""")            fun findUserFeedsByReviewId(reviewId: Int): Flow<List<ReviewAndImageEntity>>
     @Query("""DELETE 
                       FROM MyFeedEntity 
-                      WHERE reviewId = (:reviewId)""")                           suspend fun deleteFeed(reviewId: Int): Int
+                      WHERE reviewId = (:reviewId)""")                           suspend fun deleteById(reviewId: Int): Int
     @Transaction @Insert(onConflict = OnConflictStrategy.REPLACE)
-                                                       suspend fun insertAll(plantList: List<MyFeedEntity>)
+                                                       suspend fun addAll(plantList: List<MyFeedEntity>)
     @Query("""DELETE 
                       FROM FeedEntity""")                           suspend fun deleteAll()
-    @Query("""DELETE 
-                      FROM ReviewImageEntity 
-                      WHERE reviewId = (:reviewId)""")                           suspend fun deletePicturesByReviewId(reviewId: Int)
 
     @Transaction
     suspend fun insertAllFeed(feedList      : List<MyFeedEntity>,
@@ -100,7 +97,7 @@ interface MyFeedDao {
         likeDao.addAll(likeList)
         favoriteDao.addAll(favorites)
         //마지막에 안넣어주면 앱 강제종료
-        insertAll(feedList)
+        addAll(feedList)
     }
 
     @Transaction

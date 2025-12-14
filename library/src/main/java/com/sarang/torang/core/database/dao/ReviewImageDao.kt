@@ -8,12 +8,13 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ReviewImageDao {
-    @Query("""
-        SELECT * 
-        FROM ReviewImageEntity 
-        WHERE reviewId = (:reviewId)""")           fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>>
+    @Query("""SELECT * 
+                      FROM ReviewImageEntity 
+                      WHERE reviewId = (:reviewId)""")          fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>>
     @Query(""" DELETE 
-        FROM ReviewImageEntity 
-        WHERE reviewId = (:reviewId)
-        """)    suspend  fun deleteByReviewId(reviewId: Int)
+                       FROM ReviewImageEntity 
+                       WHERE reviewId = (:reviewId)""")    suspend fun deleteByReviewId(reviewId: Int)
+    @Query("""DELETE 
+                      FROM ReviewImageEntity 
+                      WHERE reviewId = (:reviewId)""")    suspend fun deletePicturesByReviewId(reviewId: Int)
 }
