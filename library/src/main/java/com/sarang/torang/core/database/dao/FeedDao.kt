@@ -45,7 +45,7 @@ interface FeedDao {
     @Query(""" SELECT * 
         FROM FeedEntity 
         WHERE reviewId = (:reviewId) 
-        ORDER BY FeedEntity.createDate DESC """)                           fun findByReviewIdFlow(reviewId: Int)             : Flow<ReviewAndImageEntity>
+        ORDER BY FeedEntity.createDate DESC """)                           fun findByReviewIdFlow(reviewId: Int)             : Flow<ReviewAndImageEntity?>
     @Query("""SELECT * 
               FROM FeedEntity 
               WHERE reviewId = (SELECT reviewId 
