@@ -5,9 +5,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.api.feed.ApiFeedV1
 import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.FeedDao
+import com.sarang.torang.core.database.dao.FeedGridDao
 import com.sarang.torang.core.database.dao.LikeDao
 import com.sarang.torang.core.database.dao.PictureDao
 import com.sarang.torang.core.database.dao.UserDao
+import com.sarang.torang.core.database.model.feed.FeedGridEntity
 import com.sarang.torang.data.remote.response.FeedApiModel
 import com.sarang.torang.di.torang_database_di.toFavoriteEntity
 import com.sarang.torang.di.torang_database_di.toFeedEntity
@@ -16,6 +18,7 @@ import com.sarang.torang.di.torang_database_di.toReviewImage
 import com.sarang.torang.di.torang_database_di.toUserEntity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -36,6 +39,8 @@ class FeedDaoApITest {
     @Inject lateinit var likeDao: LikeDao
     @Inject lateinit var pictureDao: PictureDao
     @Inject lateinit var favoriteDao: FavoriteDao
+
+    @Inject lateinit var feedGridDao: FeedGridDao
     @Inject lateinit var apiFeedV1: ApiFeedV1
     @Before fun setUp() { hiltRule.inject() }
 
@@ -73,5 +78,13 @@ class FeedDaoApITest {
     fun getFeedByPictureIdTest() = runTest {
         val result = feedDao.findByPictureIdFlow(1039).first()
         Log.d(tag, result.toString());
+    }
+
+    @Test fun findAllFeedDao() = runTest{
+        feedGridDao.addAll(listOf(
+            FeedGridEntity(reviewId = 634, order = 0)
+        ))
+
+        assertEquals(true, feedDao.findAllByFeedGrid().first().isNotEmpty())
     }
 }

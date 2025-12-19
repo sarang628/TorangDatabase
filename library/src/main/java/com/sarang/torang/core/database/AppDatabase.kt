@@ -12,6 +12,7 @@ import com.sarang.torang.core.database.dao.AlarmDao
 import com.sarang.torang.core.database.dao.CommentDao
 import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.FeedDao
+import com.sarang.torang.core.database.dao.FeedGridDao
 import com.sarang.torang.core.database.dao.LikeDao
 import com.sarang.torang.core.database.dao.LoggedInUserDao
 import com.sarang.torang.core.database.dao.MainFeedDao
@@ -38,6 +39,7 @@ import com.sarang.torang.core.database.model.chat.ChatRoomEntity
 import com.sarang.torang.core.database.model.comment.CommentEntity
 import com.sarang.torang.core.database.model.favorite.FavoriteEntity
 import com.sarang.torang.core.database.model.feed.FeedEntity
+import com.sarang.torang.core.database.model.feed.FeedGridEntity
 import com.sarang.torang.core.database.model.feed.MainFeedEntity
 import com.sarang.torang.core.database.model.feed.MyFeedEntity
 import com.sarang.torang.core.database.model.image.RestaurantImageEntity
@@ -75,7 +77,8 @@ import com.sarang.torang.workers.TorangDatabaseWorker
         ChatImageEntity::class,
         SearchedRestaurantEntity::class,
         RestaurantImageEntity::class,
-        MainFeedEntity::class
+        MainFeedEntity::class,
+        FeedGridEntity::class,
     ],
     version = 1,
     exportSchema = false
@@ -103,6 +106,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun chatParticipantsDao()          : ChatParticipantsDao
     abstract fun mainFeedDao()                  : MainFeedDao
     abstract fun reviewImageDao()               : ReviewImageDao
+    abstract fun feedGridDao()                  : FeedGridDao
 
 
     companion object {
