@@ -9,6 +9,7 @@ import com.sarang.torang.core.database.model.favorite.FavoriteAndImageEntity
 import com.sarang.torang.core.database.model.favorite.FavoriteEntity
 
 import com.sarang.torang.core.database.model.feed.FeedEntity
+import com.sarang.torang.core.database.model.feed.FeedGridAndImageEntity
 import com.sarang.torang.core.database.model.feed.FeedGridEntity
 import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import com.sarang.torang.core.database.model.image.ReviewImageEntity;
@@ -101,7 +102,7 @@ interface FeedDao {
                      createDate DESC          -- NULL이 아닌 경우 가장 오래된 것
                    LIMIT 1
                )
-        ORDER BY f.`order` DESC;""")           fun findAllByFeedGrid()                           : Flow<List<FeedGridEntity>>
+        ORDER BY f.`order` DESC;""")           fun findAllByFeedGrid()                           : Flow<List<FeedGridAndImageEntity>>
     @Query(""" 
         SELECT * 
         FROM FeedEntity 
