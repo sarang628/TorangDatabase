@@ -102,7 +102,7 @@ interface FeedDao {
                      createDate DESC          -- NULL이 아닌 경우 가장 오래된 것
                    LIMIT 1
                )
-        ORDER BY f.`order` DESC;""")           fun findAllByFeedGrid()                           : Flow<List<FeedGridAndImageEntity>>
+        ORDER BY f.`order` ASC;""")           fun findAllByFeedGrid()                           : Flow<List<FeedGridAndImageEntity>>
     @Query(""" 
         SELECT * 
         FROM FeedEntity 
