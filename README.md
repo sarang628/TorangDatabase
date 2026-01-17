@@ -3,6 +3,9 @@
 앱의 database를 담당
 
 ## Tech Stack
+- Android App Archirecture
+  - DataLayer
+- Room
 
 ## development note
 - 모델 패키지 구조 변경

@@ -58,6 +58,6 @@ interface UserDao {
                                followers = user.following,
                                following = user.following)) }
     }
-    @Transaction                           suspend fun insertOrUpdateUsers(users: List<UserEntity>) {
+                                           suspend fun insertOrUpdateUsers(users: List<UserEntity>) {
         users.forEach { user -> insertOrUpdateUser(user = user) } }
 }
