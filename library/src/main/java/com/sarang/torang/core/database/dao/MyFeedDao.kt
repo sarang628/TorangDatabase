@@ -93,7 +93,7 @@ interface MyFeedDao {
                               favoriteDao   : FavoriteDao,
                               favorites     : List<FavoriteEntity>) {
         pictureDao.addAll(reviewImages)
-        userDao.addAll(userList)
+        //사용자 업데이트는 API에서 팔로워 숫자를 주지 않아 제거
         likeDao.addAll(likeList)
         favoriteDao.addAll(favorites)
         //마지막에 안넣어주면 앱 강제종료
