@@ -12,18 +12,22 @@ import kotlinx.coroutines.flow.Flow
 interface PictureDao {
     @Query("""SELECT * 
                       FROM ReviewImageEntity 
-                      WHERE reviewId = :reviewId""")           fun findByIdFlow(reviewId: Int): Flow<List<ReviewImageEntity>>
+                      WHERE reviewId = :reviewId
+                      ORDER by `order`""")           fun findByIdFlow(reviewId: Int): Flow<List<ReviewImageEntity>>
     @Query("""SELECT * 
                       FROM ReviewImageEntity 
-                      WHERE reviewId = :reviewId""")   suspend fun findById(reviewId: Int): List<ReviewImageEntity>
+                      WHERE reviewId = :reviewId
+                      ORDER by `order`""")   suspend fun findById(reviewId: Int): List<ReviewImageEntity>
     @Query("""SELECT * 
                       FROM ReviewImageEntity 
-                      WHERE restaurantId = :restaurantId""")   suspend fun findByRestaurantId(restaurantId: Int): List<ReviewImageEntity>
+                      WHERE restaurantId = :restaurantId
+                      ORDER by `order`""")   suspend fun findByRestaurantId(restaurantId: Int): List<ReviewImageEntity>
     @Query(""" SELECT * 
                       FROM ReviewImageEntity 
                       Where restaurantId = (SELECT restaurantId 
                                             FROM ReviewImageEntity 
-                                            WHERE pictureId = :pictureId)""")   suspend fun findAllRestaurantById(pictureId: Int): List<ReviewImageEntity>
+                                            WHERE pictureId = :pictureId)
+                      ORDER by `order`""")   suspend fun findAllRestaurantById(pictureId: Int): List<ReviewImageEntity>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Transaction
                                 suspend fun addAll(reviewImages: List<ReviewImageEntity>)

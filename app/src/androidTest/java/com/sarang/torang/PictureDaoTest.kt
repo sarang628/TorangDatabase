@@ -37,8 +37,35 @@ class PictureDaoTest {
         pictureDao.add(ReviewImageEntity(
             pictureId = 0,
             pictureUrl = "pictureUrl",
-            reviewId = 0
+            reviewId = 0,
+            order = 10
         ))
+    }
+
+    @Test
+    fun getTest() = runTest {
+        pictureDao.add(ReviewImageEntity(
+            pictureId = 10,
+            pictureUrl = "pictureUrl",
+            reviewId = 0,
+            order = 4
+        ))
+        pictureDao.add(ReviewImageEntity(
+            pictureId = 34,
+            pictureUrl = "pictureUrl",
+            reviewId = 0,
+            order = 3
+        ))
+        pictureDao.add(ReviewImageEntity(
+            pictureId = 1,
+            pictureUrl = "pictureUrl",
+            reviewId = 0,
+            order = 10
+        ))
+
+        val result = pictureDao.findById(0)
+
+        assertEquals(result.get(0).order, 3)
     }
 
 }

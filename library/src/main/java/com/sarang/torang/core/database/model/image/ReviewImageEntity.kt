@@ -15,4 +15,5 @@ data class ReviewImageEntity(
     val menu            : Int?      = null,
     val width           : Int?      = null,
     val height          : Int?      = null,
+    val order           : Int?      = null
 )
