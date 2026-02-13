@@ -8,6 +8,7 @@ import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.FeedDao
 import com.sarang.torang.core.database.dao.LikeDao
 import com.sarang.torang.core.database.dao.PictureDao
+import com.sarang.torang.core.database.dao.ReviewAndImageDao
 import com.sarang.torang.core.database.dao.UserDao
 import com.sarang.torang.core.database.model.favorite.FavoriteEntity
 import com.sarang.torang.core.database.model.feed.FeedEntity
@@ -29,6 +30,7 @@ import kotlinx.coroutines.flow.first
 class FeedDaoLocalTest {
     @get:Rule var hiltRule = HiltAndroidRule(this)
     @Inject lateinit var feedDao: FeedDao
+    @Inject lateinit var reviewAndImageDao: ReviewAndImageDao
     @Inject lateinit var userDao: UserDao
     @Inject lateinit var likeDao: LikeDao
     @Inject lateinit var pictureDao: PictureDao
@@ -63,10 +65,10 @@ class FeedDaoLocalTest {
     fun getTest() = runTest {
         addTest()
 
-        assertEquals("contents", feedDao.find(1)?.review?.contents)
-        assertEquals(true, feedDao.find(1)?.images?.isEmpty())
-        assertEquals(null, feedDao.find(1)?.like)
-        assertEquals(null, feedDao.find(1)?.favorite)
+        assertEquals("contents", reviewAndImageDao.find(1)?.review?.contents)
+        assertEquals(true, reviewAndImageDao.find(1)?.images?.isEmpty())
+        assertEquals(null, reviewAndImageDao.find(1)?.like)
+        assertEquals(null, reviewAndImageDao.find(1)?.favorite)
     }
 
     @Test
@@ -75,7 +77,7 @@ class FeedDaoLocalTest {
 
         feedDao.deleteByReviewId(1)
 
-        assertEquals(null,feedDao.find(1))
+        assertEquals(null,reviewAndImageDao.find(1))
     }
 
     @Test
@@ -97,7 +99,7 @@ class FeedDaoLocalTest {
             )
         )
 
-        assertEquals(false , feedDao.findAllFlow().first().isEmpty())
+        assertEquals(false , reviewAndImageDao.findAllFlow().first().isEmpty())
 
         likeDao.add(LikeEntity(
             likeId = 1,
@@ -105,18 +107,18 @@ class FeedDaoLocalTest {
             createDate = ""
         ))
 
-        assertEquals(1 , feedDao.findAllFlow().first()[0].like?.likeId)
+        assertEquals(1 , reviewAndImageDao.findAllFlow().first()[0].like?.likeId)
 
     }
 
     @Test
     fun getAllFlowTest() = runTest {
-        assertEquals(true, feedDao.findAllFlow().first().isEmpty())
+        assertEquals(true, reviewAndImageDao.findAllFlow().first().isEmpty())
     }
 
     @Test
     fun getAllByUserIdFlow() = runTest {
-        assertEquals(true, feedDao.findAllByUserIdFlow(1).first().isEmpty())
+        assertEquals(true, reviewAndImageDao.findAllByUserIdFlow(1).first().isEmpty())
     }
 
     @Test
@@ -143,7 +145,7 @@ class FeedDaoLocalTest {
             height = 2
         ))
 
-        val first = feedDao.findAllByFavoriteFlow().first()
+        val first = reviewAndImageDao.findAllByFavoriteFlow().first()
 
         Log.d("__findAllByFavoriteFlow", GsonBuilder().setPrettyPrinting().create().toJson(first))
 

@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import com.sarang.torang.api.feed.ApiFeedV1
 import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.FeedDao
+import com.sarang.torang.core.database.dao.FeedInsertDao
 import com.sarang.torang.core.database.dao.LikeDao
 import com.sarang.torang.core.database.dao.MainFeedDao
 import com.sarang.torang.core.database.dao.PictureDao
@@ -34,6 +35,7 @@ class MainFeedDaoTest {
     @Inject lateinit var mainFeedDao: MainFeedDao
     @Before fun setUp() { hiltRule.inject() }
     @Inject lateinit var feedDao: FeedDao
+    @Inject lateinit var feedInsertDao: FeedInsertDao
     @Inject lateinit var userDao: UserDao
     @Inject lateinit var likeDao: LikeDao
     @Inject lateinit var pictureDao: PictureDao
@@ -45,7 +47,7 @@ class MainFeedDaoTest {
     @Before
     fun before() = runTest{
         val feedList = apiFeedV1.findByPage("", 0, 20)
-        feedDao.insertAllFeed(
+        feedInsertDao.insertAllFeed(
             userDao         = userDao,
             likeDao         = likeDao,
             pictureDao      = pictureDao,
@@ -54,7 +56,8 @@ class MainFeedDaoTest {
             reviewImages    = feedList.map { it.pictures }.flatMap { it }.map { it.toReviewImage() },
             userList        = feedList.map { it.toUserEntity() },
             likeList        = feedList.filter { it.like != null }.map { it.like!!.toLikeEntity() },
-            favorites       = feedList.filter { it.favorite != null }.map { it.favorite!!.toFavoriteEntity() }
+            favorites       = feedList.filter { it.favorite != null }.map { it.favorite!!.toFavoriteEntity() },
+            feedDao         = feedDao
         )
     }
 

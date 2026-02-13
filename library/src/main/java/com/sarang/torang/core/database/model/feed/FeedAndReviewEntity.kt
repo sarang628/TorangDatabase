@@ -7,10 +7,6 @@ import com.sarang.torang.core.database.model.image.ReviewImageEntity
 
 @Entity
 data class FeedAndReviewEntity(
-    @Embedded val user: FeedEntity,
-    @Relation(
-        parentColumn = "reviewId",
-        entityColumn = "reviewId"
-    )
-    val reviewImages: List<ReviewImageEntity>
+    @Embedded                                                       val feed        : FeedEntity,
+    @Relation(parentColumn = "reviewId", entityColumn = "reviewId") val reviewImages: List<ReviewImageEntity>
 )

@@ -13,6 +13,7 @@ import com.sarang.torang.core.database.dao.CommentDao
 import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.FeedDao
 import com.sarang.torang.core.database.dao.FeedGridDao
+import com.sarang.torang.core.database.dao.FeedInsertDao
 import com.sarang.torang.core.database.dao.LikeDao
 import com.sarang.torang.core.database.dao.LoggedInUserDao
 import com.sarang.torang.core.database.dao.MainFeedDao
@@ -22,6 +23,7 @@ import com.sarang.torang.core.database.dao.MyReviewDao
 import com.sarang.torang.core.database.dao.PictureDao
 import com.sarang.torang.core.database.dao.RestaurantDao
 import com.sarang.torang.core.database.dao.RestaurantImageDao
+import com.sarang.torang.core.database.dao.ReviewAndImageDao
 import com.sarang.torang.core.database.dao.ReviewDao
 import com.sarang.torang.core.database.dao.ReviewImageDao
 import com.sarang.torang.core.database.dao.SearchDao
@@ -107,6 +109,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun mainFeedDao()                  : MainFeedDao
     abstract fun reviewImageDao()               : ReviewImageDao
     abstract fun feedGridDao()                  : FeedGridDao
+    abstract fun reviewAndImageDao()            : ReviewAndImageDao
+    abstract fun feedInsertDao()                : FeedInsertDao
 
 
     companion object {
