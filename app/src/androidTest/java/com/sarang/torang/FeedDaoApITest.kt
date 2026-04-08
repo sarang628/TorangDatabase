@@ -2,7 +2,7 @@ package com.sarang.torang
 
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sarang.torang.api.feed.ApiFeedV1
+import com.sarang.torang.api.ApiFeedV1
 import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.FeedDao
 import com.sarang.torang.core.database.dao.FeedGridDao
@@ -29,8 +29,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
-import kotlin.collections.filter
-import kotlin.collections.map
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest

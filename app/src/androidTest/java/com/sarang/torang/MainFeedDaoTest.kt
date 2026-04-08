@@ -3,7 +3,7 @@ package com.sarang.torang
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.gson.GsonBuilder
-import com.sarang.torang.api.feed.ApiFeedV1
+import com.sarang.torang.api.ApiFeedV1
 import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.FeedDao
 import com.sarang.torang.core.database.dao.FeedInsertDao

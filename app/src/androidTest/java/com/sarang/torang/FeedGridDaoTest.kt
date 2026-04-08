@@ -1,7 +1,7 @@
 package com.sarang.torang
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sarang.torang.api.feed.ApiFeedV1
+import com.sarang.torang.api.ApiFeedV1
 import com.sarang.torang.core.database.dao.FeedDao
 import com.sarang.torang.core.database.dao.FeedGridDao
 import com.sarang.torang.core.database.model.feed.FeedGridEntity

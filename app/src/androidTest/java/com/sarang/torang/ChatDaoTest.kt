@@ -63,7 +63,7 @@ class ChatDaoTest {
         val result = login.emailLogin("sry_ang@naver.com", encrypt.encrypt("Torang!234"))
         token = result.token
 
-        val chatRooms = apiChat.getChatRoom(token)
+        val chatRooms = apiChat.findAll(token)
         chatRoomDao.addAll(chatRooms.chatRoomEntityList)
         chatParticipantsDao.addAll(chatRooms.chatParticipantsEntityList)
         userDao.addAll(chatRooms.users)
